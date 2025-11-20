@@ -7,6 +7,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace Infra.Base
 {
@@ -15,22 +16,29 @@ namespace Infra.Base
     public class BaseTest
     {
         protected IWebDriver driver;
+        protected WebDriverWait wait;
         protected string baseUrl;
         protected MainConfig config;
         protected string username;
         protected string password;
 
         protected virtual bool DoDefaultLogin => true;
-        
+
         [SetUp]
         public void SetUp()
         {
             var options = new ChromeOptions();
-#if DEBUG
-            //options.AddArgument("--headless");
+
+#if !DEBUG
+            options.AddArgument("--headless=new");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
 #endif
+
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             var json = File.ReadAllText("Config/MainConfig.json");
             config = JsonConvert.DeserializeObject<MainConfig>(json);
@@ -38,15 +46,14 @@ namespace Infra.Base
             username = config.username;
             password = config.password;
 
-            var loginPage = new LoginPage(driver);
+            var loginPage = new LoginPage(driver, wait);
             loginPage.NavigateToHome(baseUrl);
 
-            if (DoDefaultLogin) 
+            if (DoDefaultLogin)
             {
                 loginPage.Login(username, password);
             }
         }
-
 
         [TearDown]
         public void TearDown()
@@ -66,7 +73,5 @@ namespace Infra.Base
             driver.Quit();
             driver.Dispose();
         }
-
-
     }
 }

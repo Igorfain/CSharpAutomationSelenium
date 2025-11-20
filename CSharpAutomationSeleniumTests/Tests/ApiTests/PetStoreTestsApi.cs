@@ -7,7 +7,7 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
 {
   
     [AllureFeature("PetStore API")]
-    public class PetStoreTests : BaseApiTest
+    public class PetStoreTestsApi : BaseApiTest
     {
         [Test]
         [Order(1)]

@@ -2,6 +2,7 @@
 using automationexerciseTests.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace Infra.Steps
 {
@@ -9,41 +10,44 @@ namespace Infra.Steps
     {
         private readonly LoginPage loginPage;
 
-        public LoginSteps(IWebDriver driver)
+        public LoginSteps(IWebDriver driver, WebDriverWait wait)
         {
-            loginPage = new LoginPage(driver);
+            loginPage = new LoginPage(driver, wait);
         }
 
         [AllureStep("Verify logged in user is {0}")]
-        public void VerifyLoggedInUser(string expectedUsername)
+        public LoginSteps VerifyLoggedInUser(string expectedUsername)
         {
-            Thread.Sleep(2000); // Wait for the page to load and display the username
             string actualUser = loginPage.GetLoggedInUsername();
             Assert.That(actualUser, Is.EqualTo(expectedUsername), "User login mismatch");
+            return this;
         }
 
         [AllureStep("Login with invalid credentials")]
-        public void LoginWithInvalidCredentials(string email, string password)
+        public LoginSteps LoginWithInvalidCredentials(string email, string password)
         {
             loginPage.Login(email, password);
             string errorMessage = loginPage.GetErrorMessage();
 
             Assert.That(errorMessage, Is.EqualTo("Your email or password is incorrect!"),
                 "Error message mismatch");
+
+            return this;
         }
 
         [AllureStep("Sign up with name {0} and email {1}")]
-        public void SignUpExitingEmail(string name, string email)
+        public LoginSteps SignUpExitingEmail(string name, string email)
         {
             loginPage.SignUp(name, email);
-
+            return this;
         }
 
         [AllureStep("Verify sign up error message")]
-        public void VerifySignUpErrorMessage(string expectedErrorMessage)
+        public LoginSteps VerifySignUpErrorMessage(string expectedErrorMessage)
         {
             var actualErrorMessage = loginPage.GetSignUpErrorMessage();
             Assert.That(actualErrorMessage, Is.EqualTo(expectedErrorMessage), "Sign up error message mismatch");
+            return this;
         }
     }
 }
