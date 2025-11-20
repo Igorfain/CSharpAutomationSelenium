@@ -13,9 +13,10 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [AllureTag("login")]
         public void LoginWithWrongCredentials()
         {
-            var loginSteps = new LoginSteps(driver);
-            loginSteps.LoginWithInvalidCredentials(config.invalidUsername, config.invalidPassword);
-            loginSteps.VerifySignUpErrorMessage("Your email or password is incorrect!");
+            var loginSteps = new LoginSteps(driver,wait);
+            loginSteps.LoginWithInvalidCredentials(config.invalidUsername, config.invalidPassword)
+                      .VerifySignUpErrorMessage("Your email or password is incorrect!");
+
         }
     }
 }

@@ -7,10 +7,12 @@ namespace automationexerciseTests.Pages
     public class LoginPage
     {
         private readonly IWebDriver driver;
+        private readonly WebDriverWait wait;
 
-        public LoginPage(IWebDriver driver)
+        public LoginPage(IWebDriver driver, WebDriverWait wait)
         {
             this.driver = driver;
+            this.wait = wait;
         }
 
         private IWebElement EmailInput => driver.FindElement(By.CssSelector("[data-qa='login-email']"));
@@ -18,11 +20,12 @@ namespace automationexerciseTests.Pages
         private IWebElement LoginButton => driver.FindElement(By.CssSelector("[data-qa='login-button']"));
         private IWebElement LoggedInUsername => driver.FindElement(By.CssSelector("li a b"));
         private By ErrorMessageBy => By.CssSelector("p[style*='color: red']");
+        private By SignupErrorMessageBy => By.CssSelector("p[style*='color: red']");
         private IWebElement SignUpNameField => driver.FindElement(By.CssSelector("[data-qa='signup-name']"));
         private IWebElement SignUpEmailField => driver.FindElement(By.CssSelector("[data-qa='signup-email']"));
         private IWebElement SignUpButton => driver.FindElement(By.CssSelector("[data-qa='signup-button']"));
-        private By SignupErrorMessageBy => By.CssSelector("p[style*='color: red']");
-        private IWebElement SignupErrorMessage => driver.FindElement(SignupErrorMessageBy);
+        private By LoggedInUsernameBy => By.CssSelector("li a b");
+
 
         public void NavigateToHome(string baseUrl)
         {
@@ -38,13 +41,12 @@ namespace automationexerciseTests.Pages
 
         public string GetLoggedInUsername()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            return (LoggedInUsername).Text;
+            var element = wait.Until(ExpectedConditions.ElementIsVisible(LoggedInUsernameBy));
+            return element.Text;
         }
 
         public string GetErrorMessage()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             var element = wait.Until(ExpectedConditions.ElementIsVisible(ErrorMessageBy));
             return element.Text;
         }
@@ -58,10 +60,8 @@ namespace automationexerciseTests.Pages
 
         public string GetSignUpErrorMessage()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.ElementIsVisible(SignupErrorMessageBy));
-            return SignupErrorMessage.Text;
+            var element = wait.Until(ExpectedConditions.ElementIsVisible(SignupErrorMessageBy));
+            return element.Text;
         }
-
     }
 }

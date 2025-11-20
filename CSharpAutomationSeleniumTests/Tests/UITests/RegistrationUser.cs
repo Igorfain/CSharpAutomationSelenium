@@ -12,7 +12,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [SetUp]
         public void Setup()
         {
-            loginSteps = new LoginSteps(driver);
+            loginSteps = new LoginSteps(driver,wait);
         }
 
         [Test]

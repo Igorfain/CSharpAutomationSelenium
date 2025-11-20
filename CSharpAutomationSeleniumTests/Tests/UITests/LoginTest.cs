@@ -11,7 +11,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [SetUp]
         public void Setup()
         {
-            loginSteps = new LoginSteps(driver);
+            loginSteps = new LoginSteps(driver,wait);
         }
 
         [Test]
@@ -20,7 +20,10 @@ namespace CSharpAutomationSelenium.Tests.UITests
         public void SuccessfulLoginTest()
         {
             var username = "TestUser";
-            loginSteps.VerifyLoggedInUser(username);
+            loginSteps
+                .VerifyLoggedInUser(username);
         }
+
+
     }
 }
