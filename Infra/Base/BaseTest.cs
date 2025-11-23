@@ -15,12 +15,12 @@ namespace Infra.Base
     [AllureNUnit]
     public class BaseTest
     {
-        protected IWebDriver driver;
-        protected WebDriverWait wait;
-        protected string baseUrl;
-        protected MainConfig config;
-        protected string username;
-        protected string password;
+        protected IWebDriver? driver;
+        protected WebDriverWait? wait;
+        protected string? baseUrl;
+        protected MainConfig? config;
+        protected string? username;
+        protected string? password;
 
         protected virtual bool DoDefaultLogin => true;
 
@@ -28,13 +28,10 @@ namespace Infra.Base
         public void SetUp()
         {
             var options = new ChromeOptions();
-
-#if !DEBUG
-            options.AddArgument("--headless=new");
             options.AddArgument("--disable-gpu");
             options.AddArgument("--no-sandbox");
             options.AddArgument("--disable-dev-shm-usage");
-#endif
+            options.AddArgument("--headless=new");
 
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
