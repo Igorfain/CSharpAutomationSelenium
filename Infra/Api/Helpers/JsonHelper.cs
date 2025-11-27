@@ -1,16 +1,16 @@
-﻿
+﻿using System;
+using System.IO;
+
 namespace Infra.Api.Helpers
 {
     public static class JsonHelper
     {
         public static string Read(string fileName)
         {
-            var path = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                $@"..\..\..\..\Infra\Api\Requests\{fileName}"
-            );
+            var basePath = AppContext.BaseDirectory;
+            var filePath = Path.Combine(basePath, "Api", "Requests", fileName);
 
-            return File.ReadAllText(path);
+            return File.ReadAllText(filePath);
         }
     }
 }
