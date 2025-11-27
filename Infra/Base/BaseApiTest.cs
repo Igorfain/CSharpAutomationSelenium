@@ -11,8 +11,8 @@ namespace Infra.Base
     [Category("API")]
     public class BaseApiTest
     {
-        protected RestClient client;
-        protected RestRequest request;
+        protected RestClient? client;
+        protected RestRequest? request;
 
         [SetUp]
         public void Setup()
