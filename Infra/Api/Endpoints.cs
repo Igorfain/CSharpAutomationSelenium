@@ -2,10 +2,10 @@
 {
     public static class PetStoreEndpoints
     {
-        public const string BaseUrl = "https://petstore.swagger.io/v2";
+        public const string BASE_API = "https://petstore.swagger.io/v2";
 
-        public static string CreatePet => "/pet";
-        public static string GetPet(long id) => $"/pet/{id}";
-        public static string DeletePet(long id) => $"/pet/{id}";
+        public const string CREATE_PET = BASE_API + "/pet";
+        public const string GET_PET = BASE_API + "/pet/";     // + id
+        public const string DELETE_PET = BASE_API + "/pet/";  // + id
     }
 }

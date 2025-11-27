@@ -9,16 +9,16 @@ namespace Infra.Api
 
         private static RestClient Create()
         {
-            var options = new RestClientOptions(PetStoreEndpoints.BaseUrl)
+            var options = new RestClientOptions(PetStoreEndpoints.BASE_API)
             {
                 ThrowOnAnyError = false,
-                MaxTimeout = 0
+                Timeout = TimeSpan.FromSeconds(30)
             };
 
             var client = new RestClient(options);
 
             client.AddDefaultHeader("Accept", "application/json");
-            client.AddDefaultHeader("User-Agent", "automationexerciseTests/1.0");
+            client.AddDefaultHeader("User-Agent", "CSharpAutomation/1.0");
 
             return client;
         }

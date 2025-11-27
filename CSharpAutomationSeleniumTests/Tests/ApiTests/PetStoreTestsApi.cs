@@ -1,14 +1,16 @@
 ﻿using Allure.NUnit.Attributes;
+using Infra.Api;
 using Infra.Base;
 using Newtonsoft.Json;
 using RestSharp;
 
 namespace CSharpAutomationSelenium.Tests.ApiTests
 {
-  
     [AllureFeature("PetStore API")]
     public class PetStoreTestsApi : BaseApiTest
     {
+        private const long PetId = 77701;
+
         [Test]
         [Order(1)]
         [AllureStory("Create Pet")]
@@ -16,17 +18,20 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
         {
             var pet = new
             {
-                Id = 77701,
+                Id = PetId,
                 Name = "FreeWindPet",
                 Status = "available"
             };
 
-            var request = new RestRequest("/pet", Method.Post);
+            var request = new RestRequest(PetStoreEndpoints.CREATE_PET, Method.Post);
+            request.AddHeader("Accept", "application/json");
+            request.AddHeader("Content-Type", "application/json");
             request.AddJsonBody(pet);
 
             var response = client.Execute(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+            Assert.That(response.Content, Is.Not.Null);
         }
 
         [Test]
@@ -34,13 +39,15 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
         [AllureStory("Get Pet")]
         public void GetPet()
         {
-            var request = new RestRequest("/pet/77701", Method.Get);
+            var request = new RestRequest(PetStoreEndpoints.GET_PET + PetId, Method.Get);
+            request.AddHeader("Accept", "application/json");
+
             var response = client.Execute(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+            Assert.That(response.Content, Is.Not.Null);
 
             dynamic pet = JsonConvert.DeserializeObject(response.Content);
-
             Assert.That((string)pet.name, Is.EqualTo("FreeWindPet"));
         }
 
@@ -49,10 +56,14 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
         [AllureStory("Delete Pet")]
         public void DeletePet()
         {
-            var request = new RestRequest("/pet/77701", Method.Delete);
+            var request = new RestRequest(PetStoreEndpoints.DELETE_PET + PetId, Method.Delete);
+            request.AddHeader("Accept", "application/json");
+
             var response = client.Execute(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
         }
+
+
     }
 }
