@@ -1,10 +1,12 @@
 ﻿using Allure.NUnit.Attributes;
-using Infra.Api;
+using Infra.Api.Helpers;
+using Infra.Api.Requests;
 using Infra.Base;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Net;
 
-namespace CSharpAutomationSelenium.Tests.ApiTests
+namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 {
     [AllureFeature("PetStore API")]
     public class PetStoreTestsApi : BaseApiTest
@@ -16,21 +18,13 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
         [AllureStory("Create Pet")]
         public void CreatePet()
         {
-            var pet = new
-            {
-                Id = PetId,
-                Name = "FreeWindPet",
-                Status = "available"
-            };
+            var json = JsonHelper.Read("CreatePet.json");
 
-            var request = new RestRequest(PetStoreEndpoints.CREATE_PET, Method.Post);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json");
-            request.AddJsonBody(pet);
+            PetRequests.Create(request, json);
 
             var response = client.Execute(request);
 
-            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(response.Content, Is.Not.Null);
         }
 
@@ -39,16 +33,15 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
         [AllureStory("Get Pet")]
         public void GetPet()
         {
-            var request = new RestRequest(PetStoreEndpoints.GET_PET + PetId, Method.Get);
-            request.AddHeader("Accept", "application/json");
+            PetRequests.Get(request, PetId);
 
             var response = client.Execute(request);
 
-            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
-            Assert.That(response.Content, Is.Not.Null);
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-            dynamic pet = JsonConvert.DeserializeObject(response.Content);
-            Assert.That((string)pet.name, Is.EqualTo("FreeWindPet"));
+            var pet = JsonConvert.DeserializeObject<PetModel>(response.Content);
+
+            PetValidator.ValidateCreatedPet(pet, PetId, "FreeWindPet");
         }
 
         [Test]
@@ -56,14 +49,11 @@ namespace CSharpAutomationSelenium.Tests.ApiTests
         [AllureStory("Delete Pet")]
         public void DeletePet()
         {
-            var request = new RestRequest(PetStoreEndpoints.DELETE_PET + PetId, Method.Delete);
-            request.AddHeader("Accept", "application/json");
+            PetRequests.Delete(request, PetId);
 
             var response = client.Execute(request);
 
-            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
-
-
     }
 }
