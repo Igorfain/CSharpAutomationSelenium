@@ -2,10 +2,10 @@
 using Allure.NUnit.Attributes;
 using NUnit.Framework;
 using RestSharp;
+using Infra.Api;
 
 namespace Infra.Base
 {
-
     [AllureNUnit]
     [AllureEpic("API Tests")]
     [Category("API")]
@@ -16,13 +16,9 @@ namespace Infra.Base
         [SetUp]
         public void Setup()
         {
-            client = new RestClient("https://petstore.swagger.io/v2");
+            client = PetStoreClientProvider.Client;
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            client?.Dispose();
-        }
+    
     }
 }
