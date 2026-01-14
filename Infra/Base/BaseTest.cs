@@ -10,6 +10,11 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using DotNetEnv;
 
+// Enables parallel execution of test classes
+[assembly: Parallelizable(ParallelScope.Fixtures)]
+// Sets the number of parallel threads
+[assembly: LevelOfParallelism(4)]
+
 namespace Infra.Base
 {
     [TestFixture]
