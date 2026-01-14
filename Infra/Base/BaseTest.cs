@@ -10,9 +10,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using DotNetEnv;
 
-// Enables parallel execution of test classes
 [assembly: Parallelizable(ParallelScope.Fixtures)]
-// Sets the number of parallel threads
 [assembly: LevelOfParallelism(4)]
 
 namespace Infra.Base
@@ -21,39 +19,43 @@ namespace Infra.Base
     [AllureNUnit]
     public class BaseTest
     {
-        protected IWebDriver? driver;
-        protected WebDriverWait? wait;
-        protected string? baseUrl;
-        protected MainConfig? config;
-        protected string? username;
-        protected string? password;
-        protected string? invalidUsername;
-        protected string? invalidPassword;
+        protected IWebDriver driver = null!;
+        protected WebDriverWait wait = null!;
+        protected string baseUrl = string.Empty;
+        protected MainConfig config = null!;
+        protected string username = string.Empty;
+        protected string password = string.Empty;
+        protected string invalidUsername = string.Empty;
+        protected string invalidPassword = string.Empty;
 
         protected virtual bool DoDefaultLogin => true;
 
         [SetUp]
         public void SetUp()
         {
+            var json = File.ReadAllText("Config/MainConfig.json");
+            config = JsonConvert.DeserializeObject<MainConfig>(json)
+                     ?? throw new InvalidOperationException("Failed to deserialize MainConfig.json");
+
             var options = new ChromeOptions();
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--no-sandbox");
-            options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("--headless=new");
+            if (config.chromeArguments != null)
+            {
+                foreach (var argument in config.chromeArguments)
+                {
+                    options.AddArgument(argument);
+                }
+            }
 
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             Env.TraversePath().Load();
-            var json = File.ReadAllText("Config/MainConfig.json");
-            config = JsonConvert.DeserializeObject<MainConfig>(json);
-
-            baseUrl = config.url;
-            username = Environment.GetEnvironmentVariable("LOGIN_USERNAME");
-            password = Environment.GetEnvironmentVariable("LOGIN_PASSWORD");
-            invalidUsername = Environment.GetEnvironmentVariable("INVALID_USERNAME");
-            invalidPassword = Environment.GetEnvironmentVariable("INVALID_PASSWORD");
+            baseUrl = config.url ?? string.Empty;
+            username = Environment.GetEnvironmentVariable("LOGIN_USERNAME") ?? string.Empty;
+            password = Environment.GetEnvironmentVariable("LOGIN_PASSWORD") ?? string.Empty;
+            invalidUsername = Environment.GetEnvironmentVariable("INVALID_USERNAME") ?? string.Empty;
+            invalidPassword = Environment.GetEnvironmentVariable("INVALID_PASSWORD") ?? string.Empty;
 
             var loginPage = new LoginPage(driver, wait);
             loginPage.NavigateToHome(baseUrl);
@@ -67,7 +69,7 @@ namespace Infra.Base
         [TearDown]
         public void TearDown()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed && driver != null)
             {
                 var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
                 var bytes = screenshot.AsByteArray;
@@ -79,8 +81,8 @@ namespace Infra.Base
                 );
             }
 
-            driver.Quit();
-            driver.Dispose();
+            driver?.Quit();
+            driver?.Dispose();
         }
     }
 }
