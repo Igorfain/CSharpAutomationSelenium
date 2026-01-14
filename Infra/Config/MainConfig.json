@@ -1,3 +1,9 @@
 {
-  "url": "https://automationexercise.com/login"
+  "url": "https://automationexercise.com/login",
+  "chromeArguments": [
+    "--disable-gpu",
+    "--no-sandbox",
+    "--disable-dev-shm-usage",
+    "--headless=new"
+  ]
 }
