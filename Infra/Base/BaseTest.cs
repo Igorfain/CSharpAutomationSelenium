@@ -8,6 +8,7 @@ using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using DotNetEnv;
 
 namespace Infra.Base
 {
@@ -21,6 +22,8 @@ namespace Infra.Base
         protected MainConfig? config;
         protected string? username;
         protected string? password;
+        protected string? invalidUsername;
+        protected string? invalidPassword;
 
         protected virtual bool DoDefaultLogin => true;
 
@@ -37,11 +40,15 @@ namespace Infra.Base
             driver.Manage().Window.Maximize();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
+            Env.TraversePath().Load();
             var json = File.ReadAllText("Config/MainConfig.json");
             config = JsonConvert.DeserializeObject<MainConfig>(json);
+
             baseUrl = config.url;
-            username = config.username;
-            password = config.password;
+            username = Environment.GetEnvironmentVariable("LOGIN_USERNAME");
+            password = Environment.GetEnvironmentVariable("LOGIN_PASSWORD");
+            invalidUsername = Environment.GetEnvironmentVariable("INVALID_USERNAME");
+            invalidPassword = Environment.GetEnvironmentVariable("INVALID_PASSWORD");
 
             var loginPage = new LoginPage(driver, wait);
             loginPage.NavigateToHome(baseUrl);
