@@ -4,6 +4,8 @@
     "--disable-gpu",
     "--no-sandbox",
     "--disable-dev-shm-usage",
-    "--headless=new"
+    "--headless=new",
+    "--disable-popup-blocking",
+    "--disable-notifications"
   ]
 }

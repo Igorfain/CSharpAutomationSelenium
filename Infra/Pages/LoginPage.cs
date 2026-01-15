@@ -63,5 +63,15 @@ namespace automationexerciseTests.Pages
             var element = wait.Until(ExpectedConditions.ElementIsVisible(SignupErrorMessageBy));
             return element.Text;
         }
+
+        public string GetEmailValidationMessage()
+        {
+            return EmailInput.GetAttribute("validationMessage");
+        }
+
+        public string GetPasswordValidationMessage()
+        {
+            return PasswordInput.GetAttribute("validationMessage");
+        }
     }
 }

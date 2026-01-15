@@ -1,6 +1,7 @@
 ﻿using Allure.NUnit.Attributes;
-using Infra.Steps;
 using Infra.Base;
+using Infra.Steps;
+using Infra.Utils;
 
 namespace CSharpAutomationSelenium.Tests.UITests
 {
@@ -16,13 +17,31 @@ namespace CSharpAutomationSelenium.Tests.UITests
         }
 
         [Test]
-        [AllureTag("login")]
-        public void SignUpWithWrongCredentials()
+        [AllureTag("registration")]
+        public void RegisterNewUserFullFlowTest()
         {
-            string username = "TestUser";
-            string email = "igiayehu@gmail.com";
-            loginSteps.SignUpExistingEmail(username,email);
-            
+            string name = DataGeneratorUtils.GenerateRandomName();
+            string email = DataGeneratorUtils.GenerateRandomEmail();
+            string password = DataGeneratorUtils.GenerateRandomPassword();
+
+            var signUpSteps = new SignUpSteps(driver, wait);
+
+            loginSteps.SignUpExistingEmail(name, email);
+            RemoveAds();
+
+            signUpSteps.CompleteRegistration(
+                password,
+                "FirstName",
+                "LastName",
+                "Street 123",
+                "California",
+                "Los Angeles",
+                "90210",
+                "5550123"
+            );
+
+            Assert.That(driver.Url, Does.Contain("account_created"),
+                "User was not redirected to Account Created page after registration.");
         }
     }
 }
