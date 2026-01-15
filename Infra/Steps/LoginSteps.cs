@@ -36,7 +36,7 @@ namespace Infra.Steps
         }
 
         [AllureStep("Sign up with name {name} and email {email}")]
-        public LoginSteps SignUpExitingEmail(string name, string email)
+        public LoginSteps SignUpExistingEmail(string name, string email)
         {
             loginPage.SignUp(name, email);
             return this;
