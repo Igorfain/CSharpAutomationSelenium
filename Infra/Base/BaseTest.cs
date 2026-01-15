@@ -46,6 +46,9 @@ namespace Infra.Base
                 }
             }
 
+            options.AddExcludedArgument("enable-automation");
+            options.AddAdditionalChromeOption("useAutomationExtension", false);
+
             driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));

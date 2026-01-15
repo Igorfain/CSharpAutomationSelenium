@@ -4,7 +4,7 @@ namespace Infra.Utils
 {
     public static class DataGeneratorUtils
     {
-        private static readonly Random Random = new Random();
+        private static Random Random => System.Random.Shared;
 
         public static string GenerateRandomEmail()
         {

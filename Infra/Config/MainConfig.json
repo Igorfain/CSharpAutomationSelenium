@@ -6,7 +6,6 @@
     "--disable-dev-shm-usage",
     "--headless=new",
     "--disable-popup-blocking",
-    "--disable-notifications",
-    "--disable-infobars"
+    "--disable-notifications"
   ]
 }
