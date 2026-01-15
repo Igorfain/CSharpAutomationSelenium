@@ -59,6 +59,7 @@ namespace Infra.Base
 
             var loginPage = new LoginPage(driver, wait);
             loginPage.NavigateToHome(baseUrl);
+            RemoveAds();
 
             if (DoDefaultLogin)
             {
@@ -83,6 +84,34 @@ namespace Infra.Base
 
             driver?.Quit();
             driver?.Dispose();
+        }
+
+        // Method to nuking ads from the DOM
+        public void RemoveAds()
+        {
+            try
+            {
+                IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+                string script = @"
+            const selectors = [
+                'iframe[id^=""aswift""]', 
+                'iframe[name^=""aswift""]', 
+                'ins.adsbygoogle', 
+                '#google_esf', 
+                '.google-anno-placement',
+                '#ad_iframe',
+                'div[id^=""google_ads""]'
+            ];
+            selectors.forEach(selector => {
+                document.querySelectorAll(selector).forEach(el => el.remove());
+            });
+            // Force removal of the blocking overlay class
+            document.body.classList.remove('google-vignette-added');
+            document.documentElement.style.overflow = 'auto';
+        ";
+                js.ExecuteScript(script);
+            }
+            catch { /* Ignore */ }
         }
     }
 }
