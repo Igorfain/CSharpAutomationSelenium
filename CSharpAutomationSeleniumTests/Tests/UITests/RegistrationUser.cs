@@ -21,7 +21,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         {
             string username = "TestUser";
             string email = "igiayehu@gmail.com";
-            loginSteps.SignUpExitingEmail(username,email);
+            loginSteps.SignUpExistingEmail(username,email);
             
         }
     }
