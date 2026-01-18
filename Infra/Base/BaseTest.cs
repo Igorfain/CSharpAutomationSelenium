@@ -9,6 +9,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using DotNetEnv;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)]
 [assembly: LevelOfParallelism(4)]
@@ -49,7 +51,9 @@ namespace Infra.Base
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalChromeOption("useAutomationExtension", false);
 
+            new DriverManager().SetUpDriver(new ChromeConfig());
             driver = new ChromeDriver(options);
+
             driver.Manage().Window.Maximize();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
@@ -108,7 +112,6 @@ namespace Infra.Base
             selectors.forEach(selector => {
                 document.querySelectorAll(selector).forEach(el => el.remove());
             });
-            // Force removal of the blocking overlay class
             document.body.classList.remove('google-vignette-added');
             document.documentElement.style.overflow = 'auto';
         ";

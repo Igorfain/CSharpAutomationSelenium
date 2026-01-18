@@ -1,6 +1,6 @@
 ﻿using Allure.NUnit.Attributes;
+using Infra.Api.Factories;
 using Infra.Api.Helpers;
-using Infra.Api.Requests;
 using Infra.Base;
 using Newtonsoft.Json;
 using RestSharp;
@@ -9,49 +9,43 @@ using System.Net;
 namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 {
     [AllureFeature("PetStore API")]
+    // Allows individual test methods in this class to run at the same time
+    [Parallelizable(ParallelScope.Children)]
     public class PetStoreTestsApi : BaseApiTest
     {
-        private const long PetId = 77701;
-
         [Test]
-        [Order(1)]
         [AllureStory("Create Pet")]
-        public void CreatePet()
+        public async Task CreatePet()
         {
-            var json = JsonHelper.Read("CreatePet.json");
-
-            PetRequests.Create(request, json);
-
-            var response = client.Execute(request);
-
+            var (request, id, name) = PetFactory.CreatePetRequest();
+            var response = await client.ExecuteAsync(request);
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(response.Content, Is.Not.Null);
         }
 
         [Test]
-        [Order(2)]
         [AllureStory("Get Pet")]
-        public void GetPet()
+        public async Task GetPet()
         {
-            PetRequests.Get(request, PetId);
+            var (createRequest, id, name) = PetFactory.CreatePetRequest();
+            await client.ExecuteAsync(createRequest);
 
-            var response = client.Execute(request);
+            var request = CreateRequest(Method.Get, $"pet/{id}");
+            var response = await client.ExecuteAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-
             var pet = JsonConvert.DeserializeObject<PetModel>(response.Content);
-
-            PetValidator.ValidateCreatedPet(pet, PetId, "FreeWindPet");
+            PetValidator.ValidateCreatedPet(pet, id, name);
         }
 
         [Test]
-        [Order(3)]
         [AllureStory("Delete Pet")]
-        public void DeletePet()
+        public async Task DeletePet()
         {
-            PetRequests.Delete(request, PetId);
+            var (createRequest, id, name) = PetFactory.CreatePetRequest();
+            await client.ExecuteAsync(createRequest);
 
-            var response = client.Execute(request);
+            var request = CreateRequest(Method.Delete, $"pet/{id}");
+            var response = await client.ExecuteAsync(request);
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
