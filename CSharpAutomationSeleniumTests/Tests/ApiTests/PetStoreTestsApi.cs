@@ -2,6 +2,7 @@
 using Infra.Api.Factories;
 using Infra.Api.Helpers;
 using Infra.Base;
+using Infra.Utils;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Net;
@@ -16,6 +17,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         [AllureStory("Create Pet")]
         public async Task CreatePet()
         {
+            LoggerUtils.LogStep("API-Create Pet");
             var (request, id, name) = PetFactory.CreatePetRequest();
             var response = await client.ExecuteAsync(request);
 
@@ -26,6 +28,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         [AllureStory("Get Pet")]
         public async Task GetPet()
         {
+            LoggerUtils.LogStep("API-GET Pet");
             // 1. Validate setup (creation)
             var (createRequest, id, name) = PetFactory.CreatePetRequest();
             var createResponse = await client.ExecuteAsync(createRequest);
@@ -49,6 +52,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         [AllureStory("Delete Pet")]
         public async Task DeletePet()
         {
+            LoggerUtils.LogStep("API-Delete Pet");
             // 1. Validate setup (creation)
             var (createRequest, id, name) = PetFactory.CreatePetRequest();
             var createResponse = await client.ExecuteAsync(createRequest);
