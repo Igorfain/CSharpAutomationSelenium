@@ -9,7 +9,6 @@ using System.Net;
 namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 {
     [AllureFeature("PetStore API")]
-    // Allows individual test methods in this class to run at the same time
     [Parallelizable(ParallelScope.Children)]
     public class PetStoreTestsApi : BaseApiTest
     {
@@ -19,6 +18,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         {
             var (request, id, name) = PetFactory.CreatePetRequest();
             var response = await client.ExecuteAsync(request);
+
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
 
@@ -26,14 +26,22 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         [AllureStory("Get Pet")]
         public async Task GetPet()
         {
+            // 1. Validate setup (creation)
             var (createRequest, id, name) = PetFactory.CreatePetRequest();
-            await client.ExecuteAsync(createRequest);
+            var createResponse = await client.ExecuteAsync(createRequest);
+            Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Setup: Failed to create pet");
 
+            // 2. Execute GET
             var request = CreateRequest(Method.Get, $"pet/{id}");
             var response = await client.ExecuteAsync(request);
 
+            // 3. Null safety and validation
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.Content, Is.Not.Null.And.Not.Empty, "Response content is empty");
+
             var pet = JsonConvert.DeserializeObject<PetModel>(response.Content);
+            Assert.That(pet, Is.Not.Null, "Failed to deserialize PetModel");
+
             PetValidator.ValidateCreatedPet(pet, id, name);
         }
 
@@ -41,9 +49,12 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         [AllureStory("Delete Pet")]
         public async Task DeletePet()
         {
+            // 1. Validate setup (creation)
             var (createRequest, id, name) = PetFactory.CreatePetRequest();
-            await client.ExecuteAsync(createRequest);
+            var createResponse = await client.ExecuteAsync(createRequest);
+            Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Setup: Failed to create pet");
 
+            // 2. Execute DELETE
             var request = CreateRequest(Method.Delete, $"pet/{id}");
             var response = await client.ExecuteAsync(request);
 
