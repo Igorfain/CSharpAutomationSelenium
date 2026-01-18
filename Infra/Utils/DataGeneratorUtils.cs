@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Bogus;
 
 namespace Infra.Utils
 {
     public static class DataGeneratorUtils
     {
         private static Random Random => System.Random.Shared;
+        private static readonly Faker Faker = new Faker();
+
+        public static long GeneratePetId() => Faker.Random.Long(100000, 999999);
+
+        public static string GeneratePetName() => Faker.Name.FirstName();
 
         public static string GenerateRandomEmail()
         {
@@ -23,5 +28,7 @@ namespace Infra.Utils
             string[] names = { "Igor", "Alex", "Jordan", "Taylor", "Morgan" };
             return names[Random.Next(names.Length)] + "_" + Random.Next(100, 999);
         }
+
+
     }
 }
