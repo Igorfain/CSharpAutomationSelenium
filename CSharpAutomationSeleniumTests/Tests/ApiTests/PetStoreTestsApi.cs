@@ -18,6 +18,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         public async Task CreatePet()
         {
             LoggerUtils.LogStep("API-Create Pet");
+
             var (request, id, name) = PetFactory.CreatePetRequest();
             var response = await client.ExecuteAsync(request);
 
@@ -29,16 +30,14 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         public async Task GetPet()
         {
             LoggerUtils.LogStep("API-GET Pet");
-            // 1. Validate setup (creation)
+
             var (createRequest, id, name) = PetFactory.CreatePetRequest();
             var createResponse = await client.ExecuteAsync(createRequest);
             Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Setup: Failed to create pet");
 
-            // 2. Execute GET
             var request = CreateRequest(Method.Get, $"pet/{id}");
             var response = await client.ExecuteAsync(request);
 
-            // 3. Null safety and validation
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(response.Content, Is.Not.Null.And.Not.Empty, "Response content is empty");
 
@@ -53,12 +52,11 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
         public async Task DeletePet()
         {
             LoggerUtils.LogStep("API-Delete Pet");
-            // 1. Validate setup (creation)
+
             var (createRequest, id, name) = PetFactory.CreatePetRequest();
             var createResponse = await client.ExecuteAsync(createRequest);
             Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Setup: Failed to create pet");
 
-            // 2. Execute DELETE
             var request = CreateRequest(Method.Delete, $"pet/{id}");
             var response = await client.ExecuteAsync(request);
 

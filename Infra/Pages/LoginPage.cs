@@ -1,77 +1,69 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+using automationexerciseTests.Infra.Utils;
 
 namespace automationexerciseTests.Pages
 {
     public class LoginPage
     {
-        private readonly IWebDriver driver;
-        private readonly WebDriverWait wait;
+        private readonly ActionBot _bot;
 
         public LoginPage(IWebDriver driver, WebDriverWait wait)
         {
-            this.driver = driver;
-            this.wait = wait;
+            _bot = new ActionBot(driver, wait);
         }
 
-        private IWebElement EmailInput => driver.FindElement(By.CssSelector("[data-qa='login-email']"));
-        private IWebElement PasswordInput => driver.FindElement(By.CssSelector("[data-qa='login-password']"));
-        private IWebElement LoginButton => driver.FindElement(By.CssSelector("[data-qa='login-button']"));
-        private IWebElement LoggedInUsername => driver.FindElement(By.CssSelector("li a b"));
-        private By ErrorMessageBy => By.CssSelector("p[style*='color: red']");
-        private By SignupErrorMessageBy => By.CssSelector("p[style*='color: red']");
-        private IWebElement SignUpNameField => driver.FindElement(By.CssSelector("[data-qa='signup-name']"));
-        private IWebElement SignUpEmailField => driver.FindElement(By.CssSelector("[data-qa='signup-email']"));
-        private IWebElement SignUpButton => driver.FindElement(By.CssSelector("[data-qa='signup-button']"));
-        private By LoggedInUsernameBy => By.CssSelector("li a b");
-
+        private readonly By _emailInput = By.CssSelector("[data-qa='login-email']");
+        private readonly By _passwordInput = By.CssSelector("[data-qa='login-password']");
+        private readonly By _loginButton = By.CssSelector("[data-qa='login-button']");
+        private readonly By _loggedInUsername = By.CssSelector("li a b");
+        private readonly By _errorMessage = By.CssSelector("p[style*='color: red']");
+        private readonly By _signUpNameField = By.CssSelector("[data-qa='signup-name']");
+        private readonly By _signUpEmailField = By.CssSelector("[data-qa='signup-email']");
+        private readonly By _signUpButton = By.CssSelector("[data-qa='signup-button']");
 
         public void NavigateToHome(string baseUrl)
         {
-            driver.Navigate().GoToUrl(baseUrl);
+            _bot.Navigate(baseUrl);
         }
 
         public void Login(string email, string password)
         {
-            EmailInput.SendKeys(email);
-            PasswordInput.SendKeys(password);
-            LoginButton.Click();
+            _bot.Type(_emailInput, email);
+            _bot.Type(_passwordInput, password);
+            _bot.Click(_loginButton);
         }
 
         public string GetLoggedInUsername()
         {
-            var element = wait.Until(ExpectedConditions.ElementIsVisible(LoggedInUsernameBy));
-            return element.Text;
+            return _bot.GetText(_loggedInUsername);
         }
 
         public string GetErrorMessage()
         {
-            var element = wait.Until(ExpectedConditions.ElementIsVisible(ErrorMessageBy));
-            return element.Text;
+            return _bot.GetText(_errorMessage);
         }
 
         public void SignUp(string name, string email)
         {
-            SignUpNameField.SendKeys(name);
-            SignUpEmailField.SendKeys(email);
-            SignUpButton.Click();
+            _bot.Type(_signUpNameField, name);
+            _bot.Type(_signUpEmailField, email);
+            _bot.Click(_signUpButton);
         }
 
         public string GetSignUpErrorMessage()
         {
-            var element = wait.Until(ExpectedConditions.ElementIsVisible(SignupErrorMessageBy));
-            return element.Text;
+            return _bot.GetText(_errorMessage);
         }
 
         public string GetEmailValidationMessage()
         {
-            return EmailInput.GetAttribute("validationMessage");
+            return _bot.GetAttribute(_emailInput, "validationMessage");
         }
 
         public string GetPasswordValidationMessage()
         {
-            return PasswordInput.GetAttribute("validationMessage");
+            return _bot.GetAttribute(_passwordInput, "validationMessage");
         }
     }
 }

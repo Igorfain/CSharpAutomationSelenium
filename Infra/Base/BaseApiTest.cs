@@ -10,10 +10,9 @@ namespace Infra.Base
     [AllureEpic("API Tests")]
     [Category("API")]
     [Parallelizable(ParallelScope.Fixtures)]
-
     public class BaseApiTest
     {
-        protected RestClient? client;
+        protected RestClient client = null!;
 
         [SetUp]
         public void Setup()
@@ -26,6 +25,7 @@ namespace Infra.Base
             var request = new RestRequest(resource, method);
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Content-Type", "application/json");
+
             return request;
         }
     }
