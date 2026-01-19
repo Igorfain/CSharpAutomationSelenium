@@ -1,47 +1,40 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using automationexerciseTests.Infra.Utils;
 
 namespace automationexerciseTests.Pages
 {
     public class SignUpPage
     {
-        private readonly IWebDriver driver;
-        private readonly WebDriverWait wait;
+        private readonly ActionBot _bot;
 
         public SignUpPage(IWebDriver driver, WebDriverWait wait)
         {
-            this.driver = driver;
-            this.wait = wait;
+            _bot = new ActionBot(driver, wait);
         }
 
-        private IWebElement PasswordField => driver.FindElement(By.Id("password"));
-        private IWebElement FirstNameField => driver.FindElement(By.Id("first_name"));
-        private IWebElement LastNameField => driver.FindElement(By.Id("last_name"));
-        private IWebElement AddressField => driver.FindElement(By.Id("address1"));
-        private IWebElement StateField => driver.FindElement(By.Id("state"));
-        private IWebElement CityField => driver.FindElement(By.Id("city"));
-        private IWebElement ZipcodeField => driver.FindElement(By.Id("zipcode"));
-        private IWebElement MobileNumberField => driver.FindElement(By.Id("mobile_number"));
-        private IWebElement CreateAccountButton => driver.FindElement(By.CssSelector("button[data-qa='create-account']"));
+        private readonly By _passwordField = By.Id("password");
+        private readonly By _firstNameField = By.Id("first_name");
+        private readonly By _lastNameField = By.Id("last_name");
+        private readonly By _addressField = By.Id("address1");
+        private readonly By _stateField = By.Id("state");
+        private readonly By _cityField = By.Id("city");
+        private readonly By _zipcodeField = By.Id("zipcode");
+        private readonly By _mobileNumberField = By.Id("mobile_number");
+        private readonly By _createAccountButton = By.CssSelector("button[data-qa='create-account']");
 
         public void FillRegistrationDetails(string password, string firstName, string lastName, string address, string state, string city, string zipcode, string mobile)
         {
-            // Scroll to the top field first
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", PasswordField);
-
-            PasswordField.SendKeys(password);
-            FirstNameField.SendKeys(firstName);
-            LastNameField.SendKeys(lastName);
-            AddressField.SendKeys(address);
-            StateField.SendKeys(state);
-            CityField.SendKeys(city);
-            ZipcodeField.SendKeys(zipcode);
-            MobileNumberField.SendKeys(mobile);
-
-            // JavaScript click to bypass any overlapping ads/banners
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", CreateAccountButton);
+            _bot.ScrollToElement(_passwordField);
+            _bot.Type(_passwordField, password);
+            _bot.Type(_firstNameField, firstName);
+            _bot.Type(_lastNameField, lastName);
+            _bot.Type(_addressField, address);
+            _bot.Type(_stateField, state);
+            _bot.Type(_cityField, city);
+            _bot.Type(_zipcodeField, zipcode);
+            _bot.Type(_mobileNumberField, mobile);
+            _bot.JSClick(_createAccountButton);
         }
     }
-
-
 }
