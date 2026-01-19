@@ -1,5 +1,6 @@
-﻿
-namespace automationexerciseTests.Infra.Utils
+﻿using System.Collections.Generic;
+
+namespace Infra.Utils
 {
     public class MainConfig
     {
