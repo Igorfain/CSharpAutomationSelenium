@@ -7,5 +7,8 @@
     "--headless=new",
     "--disable-popup-blocking",
     "--disable-notifications"
-  ]
+  ],
+  "DbSettings": {
+    "ConnectionString": "Host=10.0.0.15;Port=55432;Database=automation_db;Username=igor;Password=igor1234"
+  }
 }
