@@ -15,7 +15,6 @@ namespace CSharpAutomationSelenium.Tests.DbTests
             Assert.That(user, Is.Not.Null);
             Assert.That(user!.Age, Is.GreaterThan(0));
             Assert.That(user.IsActive, Is.True);
-
             Console.WriteLine($"User: {user.Email}, Age: {user.Age}, Active: {user.IsActive}");
         }
 
@@ -26,7 +25,6 @@ namespace CSharpAutomationSelenium.Tests.DbTests
 
             Assert.That(users.Count, Is.GreaterThanOrEqualTo(10));
             Assert.That(users.All(u => u.Age > 0));
-
             Console.WriteLine($"Loaded users: {users.Count}");
         }
 
@@ -37,7 +35,6 @@ namespace CSharpAutomationSelenium.Tests.DbTests
 
             Assert.That(users.Count, Is.GreaterThan(0));
             Assert.That(users.All(u => u.IsActive));
-
             Console.WriteLine($"Active users: {users.Count}");
         }
 
@@ -46,13 +43,10 @@ namespace CSharpAutomationSelenium.Tests.DbTests
         public void CheckUsersByStatus(bool isActive)
         {
             var users = Db.GetUsersByStatus(isActive);
-
             Assert.That(users.Count, Is.GreaterThan(0));
             Assert.That(users.All(u => u.IsActive == isActive));
-
             Console.WriteLine($"{(isActive ? "Active" : "Inactive")} users: {users.Count}");
         }
-
 
         //    [Test]
         //    public void TransactionRollback_Works()

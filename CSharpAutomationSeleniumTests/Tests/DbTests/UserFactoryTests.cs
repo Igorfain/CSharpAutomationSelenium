@@ -11,9 +11,7 @@ public class UserFactoryTests : BaseDbTest
     public void Factory_ShouldCreateUser()
     {
         var email = UserFactory.CreateUser(Db, isActive: true, age: 30);
-
         var user = Db.GetUserByEmail(email);
-
         Assert.That(user, Is.Not.Null);
         Assert.That(user!.Email, Is.EqualTo(email));
         Assert.That(user.IsActive, Is.True);
@@ -24,9 +22,7 @@ public class UserFactoryTests : BaseDbTest
         public void UserCreatedPreviously_ShouldNotExist()
         {
             var email = "should_not_exist@test.com";
-
             var user = Db.GetUserByEmail(email);
-
             Assert.That(user, Is.Null, "User still exists — rollback failed");
         }
     }
