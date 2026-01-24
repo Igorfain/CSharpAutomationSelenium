@@ -1,6 +1,7 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using automationexerciseTests.Pages;
+using DotNetEnv;
 using Infra.Utils;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -8,9 +9,9 @@ using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using DotNetEnv;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager.Helpers;
 
 [assembly: Parallelizable(ParallelScope.Fixtures)]
 [assembly: LevelOfParallelism(4)]
@@ -51,7 +52,7 @@ namespace Infra.Base
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalChromeOption("useAutomationExtension", false);
 
-            new DriverManager().SetUpDriver(new ChromeConfig());
+            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
             driver = new ChromeDriver(options);
 
             driver.Manage().Window.Maximize();
