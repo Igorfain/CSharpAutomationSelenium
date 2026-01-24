@@ -1,9 +1,13 @@
-﻿using Infra.Database.Helpers;
+﻿using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Infra.Database.Helpers;
 using Infra.Utils;
 using NUnit.Framework;
 
 namespace Infra.Base
 {
+    [AllureNUnit]
+    [AllureSuite("DB Tests")]
     [TestFixture]
     public class BaseDbTest
     {
