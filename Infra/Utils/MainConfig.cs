@@ -27,9 +27,13 @@ namespace Infra.Utils
             var config = JsonSerializer.Deserialize<MainConfig>(jsonString)
                          ?? throw new Exception("Failed to deserialize MainConfig.json");
 
-            config.DbSettings.ConnectionString =
-                Environment.GetEnvironmentVariable("DB_CONNECTION_STRING")
-                ?? throw new Exception("DB_CONNECTION_STRING is not set");
+            // ENV overrides JSON (but JSON still valid fallback)
+            var envConn = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            if (!string.IsNullOrWhiteSpace(envConn))
+                config.DbSettings.ConnectionString = envConn;
+
+            if (string.IsNullOrWhiteSpace(config.DbSettings.ConnectionString))
+                throw new Exception("DB ConnectionString is not set in JSON or ENV");
 
             return config;
         }
