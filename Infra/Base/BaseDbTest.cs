@@ -7,6 +7,7 @@ using NUnit.Framework;
 namespace Infra.Base
 {
     [AllureNUnit]
+    [AllureEpic("DB Tests")]
     [AllureSuite("DB Tests")]
     [TestFixture]
     public class BaseDbTest

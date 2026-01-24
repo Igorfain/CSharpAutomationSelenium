@@ -1,5 +1,6 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
+using Allure.NUnit.Attributes;
 using automationexerciseTests.Pages;
 using DotNetEnv;
 using Infra.Utils;
@@ -20,6 +21,7 @@ namespace Infra.Base
 {
     [TestFixture]
     [AllureNUnit]
+    [AllureEpic("UI Tests")]
     public class BaseTest
     {
         protected IWebDriver driver = null!;
