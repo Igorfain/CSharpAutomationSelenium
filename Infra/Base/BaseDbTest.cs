@@ -22,8 +22,15 @@ namespace Infra.Base
         [TearDown]
         public virtual void TearDown()
         {
-            Db.Rollback();
-            Db.Dispose();
+            try
+            {
+                Db?.Rollback();
+            }
+            finally
+            {
+                Db?.Dispose();
+            }
         }
+
     }
 }
