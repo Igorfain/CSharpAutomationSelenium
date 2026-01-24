@@ -11,6 +11,8 @@ public class DbHelper : IDisposable
 
     public DbHelper(string connectionString)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         _connection = new NpgsqlConnection(connectionString);
         _connection.Open();
     }
@@ -26,14 +28,9 @@ public class DbHelper : IDisposable
         _transaction = null;
     }
 
-    public T QuerySingle<T>(string sql, object? parameters = null)
+    public T? QuerySingle<T>(string sql, object? parameters = null)
     {
         return _connection.QueryFirstOrDefault<T>(sql, parameters, _transaction);
-    }
-
-    public int Execute(string sql, object? parameters = null)
-    {
-        return _connection.Execute(sql, parameters, _transaction);
     }
 
     public IEnumerable<T> Query<T>(string sql, object? parameters = null)
@@ -41,10 +38,20 @@ public class DbHelper : IDisposable
         return _connection.Query<T>(sql, parameters, _transaction);
     }
 
+    public int Execute(string sql, object? parameters = null)
+    {
+        return _connection.Execute(sql, parameters, _transaction);
+    }
 
     public void Dispose()
     {
-        _transaction?.Dispose();
-        _connection.Dispose();
+        try
+        {
+            _transaction?.Dispose();
+        }
+        finally
+        {
+            _connection.Dispose();
+        }
     }
 }
