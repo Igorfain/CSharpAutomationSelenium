@@ -16,10 +16,20 @@ namespace Infra.Steps
         }
 
         [AllureStep("Fill account details and create account")]
-        public SignUpSteps CompleteRegistration(string password, string firstName, string lastName, string address, string state, string city, string zipcode, string mobile)
+        public SignUpSteps CompleteRegistration(string password, dynamic data)
         {
-            LoggerUtils.LogStep($"Filling registration details for: {firstName} {lastName}");
-            signUpPage.FillRegistrationDetails(password, firstName, lastName, address, state, city, zipcode, mobile);
+            LoggerUtils.LogStep($"Filling registration for: {data.FirstName}{data.LastName}");
+
+            signUpPage.FillRegistrationDetails(
+                password,
+                data.FirstName,
+                data.LastName,
+                data.Address,
+                data.State,
+                data.City,
+                data.Zip,
+                data.Mobile
+            );
             return this;
         }
     }

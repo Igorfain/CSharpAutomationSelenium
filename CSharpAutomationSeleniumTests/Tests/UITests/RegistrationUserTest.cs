@@ -5,7 +5,7 @@ using Infra.Utils;
 
 namespace CSharpAutomationSelenium.Tests.UITests
 {
-    public class RegistrationUser : BaseTest
+    public class RegistrationUserTest : BaseTest
     {
         private LoginSteps _loginSteps;
         protected override bool DoDefaultLogin => false;
@@ -29,16 +29,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
             _loginSteps.SignUpExistingEmail(name, email);
             RemoveAds();
 
-            signUpSteps.CompleteRegistration(
-                password,
-                "FirstName",
-                "LastName",
-                "Street 123",
-                "California",
-                "Los Angeles",
-                "90210",
-                "5550123"
-            );
+            signUpSteps.CompleteRegistration(password, RegistrationData.GetDefaultUser());
 
             Assert.That(driver.Url, Does.Contain("account_created"),
                 "User was not redirected to Account Created page after registration.");
