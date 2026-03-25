@@ -9,12 +9,19 @@ namespace CSharpAutomationSelenium.Tests.UITests
     {
         protected override bool DoDefaultLogin => false;
 
+        private LoginSteps _loginSteps;
+
+        [SetUp]
+        public void SetUpSteps()
+        {
+            _loginSteps = new LoginSteps(driver, wait);
+        }
+
         [Test]
         [AllureTag("login")]
         public void LoginWithWrongCredentials()
         {
-            var loginSteps = new LoginSteps(driver, wait);
-            loginSteps.LoginWithInvalidCredentials(invalidUsername, invalidPassword)
+            _loginSteps.LoginWithInvalidCredentials(invalidUsername, invalidPassword)
                       .VerifySignUpErrorMessage("Your email or password is incorrect!");
         }
 
@@ -24,8 +31,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [TestCase("wrong@test.com", "12345")]
         public void LoginWithWrongCredentialsParametrized(string email, string password)
         {
-            var loginSteps = new LoginSteps(driver, wait);
-            loginSteps.LoginWithInvalidCredentials(email, password);
+          _loginSteps.LoginWithInvalidCredentials(email, password);
         }
 
         [Test]
@@ -33,9 +39,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [TestCase("", "password123", "Please fill out this field.")]
         public void LoginWithEmptyEmailTest(string email, string password, string expectedMessage)
         {
-            var loginSteps = new LoginSteps(driver, wait);
-
-            loginSteps
+            _loginSteps
                 .ExecuteLogin(email, password)
                 .VerifyBrowserEmailValidation(expectedMessage);
         }
@@ -45,9 +49,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [TestCase("valid-user@email.com", "", "Please fill out this field.")]
         public void LoginWithEmptyPasswordTest(string email, string password, string expectedMessage)
         {
-            var loginSteps = new LoginSteps(driver, wait);
-
-            loginSteps
+            _loginSteps
                 .ExecuteLogin(email, password)
                 .VerifyBrowserPasswordValidation(expectedMessage);
         }
