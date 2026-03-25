@@ -7,13 +7,13 @@ namespace CSharpAutomationSelenium.Tests.UITests
 {
     public class RegistrationUser : BaseTest
     {
-        private LoginSteps loginSteps;
+        private LoginSteps _loginSteps;
         protected override bool DoDefaultLogin => false;
 
         [SetUp]
         public void Setup()
         {
-            loginSteps = new LoginSteps(driver,wait);
+            _loginSteps = new LoginSteps(driver,wait);
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
 
             var signUpSteps = new SignUpSteps(driver, wait);
 
-            loginSteps.SignUpExistingEmail(name, email);
+            _loginSteps.SignUpExistingEmail(name, email);
             RemoveAds();
 
             signUpSteps.CompleteRegistration(
