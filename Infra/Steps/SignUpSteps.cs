@@ -18,7 +18,7 @@ namespace Infra.Steps
         [AllureStep("Fill account details and create account")]
         public SignUpSteps CompleteRegistration(string password, dynamic data)
         {
-            LoggerUtils.LogStep($"Filling registration for: {data.FirstName}{data.LastName}");
+            LoggerUtils.LogStep($"Filling registration for: {data.FirstName} {data.LastName}");
 
             signUpPage.FillRegistrationDetails(
                 password,
