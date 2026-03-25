@@ -1,5 +1,5 @@
 ﻿using Infra.Database.Helpers;
-using Infra.Database.Models;
+using Infra.Models;
 using static Infra.Database.Queries.UserQueries;
 
 namespace Infra.Database.Extensions;
