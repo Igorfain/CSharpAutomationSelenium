@@ -1,6 +1,7 @@
 ﻿using Allure.NUnit.Attributes;
 using Infra.Base;
 using Infra.Steps;
+using Infra.TestData;
 using Infra.Utils;
 
 namespace CSharpAutomationSelenium.Tests.UITests
