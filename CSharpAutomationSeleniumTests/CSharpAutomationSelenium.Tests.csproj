@@ -17,23 +17,23 @@
     <PackageReference Include="Allure.Net.Commons" Version="2.14.1" />
     <PackageReference Include="Allure.NUnit" Version="2.14.1" />
     <PackageReference Include="Bogus" Version="35.6.5" />
-    <PackageReference Include="coverlet.collector" Version="6.0.4">
+    <PackageReference Include="coverlet.collector" Version="8.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Dapper" Version="2.1.72" />
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageReference Include="NUnit" Version="4.4.0" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.11.2">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+    <PackageReference Include="NUnit" Version="4.5.1" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.12.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="6.1.0" />
-    <PackageReference Include="RestSharp" Version="113.1.0" />
-    <PackageReference Include="Selenium.Support" Version="4.40.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.40.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.2.0" />
+    <PackageReference Include="RestSharp" Version="114.0.0" />
+    <PackageReference Include="Selenium.Support" Version="4.41.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.41.0" />
   </ItemGroup>
 
   <ItemGroup>
