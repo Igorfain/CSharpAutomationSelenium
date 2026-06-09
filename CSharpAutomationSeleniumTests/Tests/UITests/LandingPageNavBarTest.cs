@@ -1,0 +1,28 @@
+﻿using Allure.NUnit.Attributes;
+using Infra.Base;
+using Infra.Steps;
+
+namespace CSharpAutomationSelenium.Tests.UITests
+{
+    public class LandingPageNavBarTest : BaseTest
+    {
+        protected override bool DoDefaultLogin => false;
+
+        private LandingPageSteps _landingPageSteps = null!;
+
+        [SetUp]
+        public void Setup()
+        {
+            _landingPageSteps = new LandingPageSteps(driver, wait);
+        }
+
+        [Test]  
+        [AllureTag("navigation")]
+        [AllureSuite("Navigation")]
+        public void NavigationBarItemsExistTest()
+        {
+            var expectedItems = Infra.Utils.LandingPageNavigationData.GetLandingPageNavItems();
+            _landingPageSteps.VerifyNavigationContainsItems(expectedItems);
+        }
+    }
+}
