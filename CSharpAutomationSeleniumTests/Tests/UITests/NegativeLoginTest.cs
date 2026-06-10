@@ -49,7 +49,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
 
         [Test]
         [AllureTag("login")]
-        [AllureSuite("login")]
+        [AllureSuite("Login")]
         [TestCase("valid-user@email.com", "", "Please fill out this field.")]
         public void LoginWithEmptyPasswordTest(string email, string password, string expectedMessage)
         {
