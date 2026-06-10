@@ -7,7 +7,6 @@ namespace CSharpAutomationSelenium.Tests.UITests
 {
     public class LandingPageNavBarTest : BaseTest
     {
-        protected override bool DoDefaultLogin => false;
 
         private LandingPageSteps _landingPageSteps = null!;
 
@@ -17,13 +16,23 @@ namespace CSharpAutomationSelenium.Tests.UITests
             _landingPageSteps = new LandingPageSteps(driver, wait);
         }
 
-        [Test]  
+        [Test]
         [AllureTag("navigation")]
-        [AllureSuite("Navigation")]
+        [AllureSuite("LandingPage")]
         public void NavigationBarItemsExistTest()
         {
-            var expectedItems = LandingPageNavigationData.GetLandingPageNavItems();
+            var expectedItems = LandingPageItemsListData.NavTopBarItemsReferenceList();
             _landingPageSteps.VerifyNavigationContainsItems(expectedItems);
+        }
+
+        [Test]
+        [AllureTag("category")]
+        [AllureSuite("LandingPage")]
+        public void BrandsBarItemsExistTest()
+        {
+            var expectedItems = LandingPageItemsListData.BrandsBarItemsReferenceList();
+            _landingPageSteps.VerifyBrandsBarContainsItems(expectedItems);
+
         }
     }
 }

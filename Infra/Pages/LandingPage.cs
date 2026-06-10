@@ -1,8 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using automationexerciseTests.Infra.Utils;
-using System.Collections.Generic;
-using SeleniumExtras.WaitHelpers;
 
 namespace automationexerciseTests.Pages
 {
@@ -12,6 +10,7 @@ namespace automationexerciseTests.Pages
         private readonly IWebDriver _driver;
         private readonly WebDriverWait _wait;
         private readonly By _navigationBarItems = By.CssSelector("ul.nav.navbar-nav li");
+        private readonly By _brandsBarItems = By.CssSelector(".brands-name .nav.nav-pills.nav-stacked li");
 
         public LandingPage(IWebDriver driver, WebDriverWait wait)
         {
@@ -32,6 +31,19 @@ namespace automationexerciseTests.Pages
             }
 
             return navigationBarItemTexts;
+        }
+
+        public List<string> GetBrandsBarItems()
+        {
+            _bot.WaitForPresenceOfAllElements(_brandsBarItems);
+            var brandsBarItems = _driver.FindElements(_brandsBarItems);
+            var brandsBarItemTexts = new List<string>();
+            foreach (var brandsBarElement in brandsBarItems)
+            {
+                brandsBarItemTexts.Add(brandsBarElement.Text.Trim());
+            }
+            return brandsBarItemTexts;
+
         }
     }
 }
