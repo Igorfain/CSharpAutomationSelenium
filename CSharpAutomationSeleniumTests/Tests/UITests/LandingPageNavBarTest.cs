@@ -1,6 +1,7 @@
 ﻿using Allure.NUnit.Attributes;
 using Infra.Base;
 using Infra.Steps;
+using Infra.Utils;
 
 namespace CSharpAutomationSelenium.Tests.UITests
 {
@@ -21,7 +22,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
         [AllureSuite("Navigation")]
         public void NavigationBarItemsExistTest()
         {
-            var expectedItems = Infra.Utils.LandingPageNavigationData.GetLandingPageNavItems();
+            var expectedItems = LandingPageNavigationData.GetLandingPageNavItems();
             _landingPageSteps.VerifyNavigationContainsItems(expectedItems);
         }
     }

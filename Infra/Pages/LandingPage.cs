@@ -23,11 +23,14 @@ namespace automationexerciseTests.Pages
         public List<string> GetNavigationBarItems()
         {
             _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(_navigationBarItems));
+            var navigationBarItems = _driver.FindElements(_navigationBarItems);
             var navigationBarItemTexts = new List<string>();
-            foreach (var navigationBarElement in _driver.FindElements(_navigationBarItems))
+
+            foreach (var navigationBarElement in navigationBarItems)
             {
                 navigationBarItemTexts.Add(navigationBarElement.Text.Trim());
             }
+
             return navigationBarItemTexts;
         }
     }
