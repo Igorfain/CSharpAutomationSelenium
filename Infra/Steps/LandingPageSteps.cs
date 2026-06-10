@@ -26,17 +26,17 @@ namespace Infra.Steps
 
             foreach (var expectedItem in expectedItems)
             {
-                bool itemExists = false;
+                bool navigationBarItemFound = false;
                 foreach (var actualItem in actualNavigationBarItems)
                 {
                     if (actualItem.Contains(expectedItem))
                     {
-                        itemExists = true;
+                        navigationBarItemFound = true;
                         break;
                     }
                 }
 
-                Assert.That(itemExists, Is.True,
+                Assert.That(navigationBarItemFound, Is.True,
                     $"Navigation bar item containing '{expectedItem}' was not found. Actual navigation bar items: {string.Join(" | ", actualNavigationBarItems)}");
             }
 
