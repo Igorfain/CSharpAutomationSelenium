@@ -3,7 +3,7 @@ namespace Infra.Utils
 {
     public static class LandingPageItemsListData
     {
-        static string username = "TestUser";
+        static private string _username = "TestUser";
 
         public static List<string> NavTopBarItemsReferenceList()
         {
@@ -18,7 +18,7 @@ namespace Infra.Utils
                 "API Testing",
                 "Video Tutorials",
                 "Contact us",
-                $"Logged in as {username}"
+                $"Logged in as {_username}"
             };
         }
 
