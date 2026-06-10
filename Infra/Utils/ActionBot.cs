@@ -16,6 +16,14 @@ namespace automationexerciseTests.Infra.Utils
         }
 
         /// <summary>
+        /// Waits until all elements located by the locator are present in the DOM.
+        /// </summary>
+        public void WaitForPresenceOfAllElements(By locator)
+        {
+            _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
+        }
+
+        /// <summary>
         /// Navigates the browser to the specified URL.
         /// </summary>
         /// <param name="url">The full URL of the page to load.</param>

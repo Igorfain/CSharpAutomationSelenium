@@ -22,7 +22,7 @@ namespace automationexerciseTests.Pages
 
         public List<string> GetNavigationBarItems()
         {
-            _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(_navigationBarItems));
+            _bot.WaitForPresenceOfAllElements(_navigationBarItems);
             var navigationBarItems = _driver.FindElements(_navigationBarItems);
             var navigationBarItemTexts = new List<string>();
 
