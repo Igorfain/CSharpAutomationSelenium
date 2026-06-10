@@ -19,6 +19,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
 
         [Test]
         [AllureTag("login")]
+        [AllureSuite("Login")]
         public void LoginWithWrongCredentials()
         {
             _loginSteps.LoginWithInvalidCredentials(invalidUsername, invalidPassword)
@@ -27,6 +28,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
 
         [Test]
         [AllureTag("login")]
+        [AllureSuite("Login")]
         [TestCase("invalidUser@email.com", "invalidPass")]
         [TestCase("wrong@test.com", "12345")]
         public void LoginWithWrongCredentialsParametrized(string email, string password)
@@ -36,6 +38,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
 
         [Test]
         [AllureTag("login")]
+        [AllureSuite("Login")]
         [TestCase("", "password123", "Please fill out this field.")]
         public void LoginWithEmptyEmailTest(string email, string password, string expectedMessage)
         {
@@ -46,6 +49,7 @@ namespace CSharpAutomationSelenium.Tests.UITests
 
         [Test]
         [AllureTag("login")]
+        [AllureSuite("login")]
         [TestCase("valid-user@email.com", "", "Please fill out this field.")]
         public void LoginWithEmptyPasswordTest(string email, string password, string expectedMessage)
         {

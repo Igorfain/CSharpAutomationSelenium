@@ -44,5 +44,31 @@ namespace Infra.Steps
             return this;
         }
 
+        [AllureStep("Verify brands bar contains items")]
+        public LandingPageSteps VerifyBrandsBarContainsItems(List<string> expectedItems)
+        {
+            LoggerUtils.LogStep($"Verifying brands bar contains {expectedItems.Count} expected items");
+
+            var actualBrandsBarItems = _landingPage.GetBrandsBarItems();
+
+            foreach (var expectedItem in expectedItems)
+            {
+                bool brandsBarItemFound = false;
+                foreach (var actualItem in actualBrandsBarItems)
+                {
+                    if (actualItem.Contains(expectedItem))
+                    {
+                        brandsBarItemFound = true;
+                        break;
+                    }
+                }
+
+                Assert.That(brandsBarItemFound, Is.True,
+                    $"Brands bar item containing '{expectedItem}' was not found. Actual brands bar items: {string.Join(" | ", actualBrandsBarItems)}");
+            }
+
+            LoggerUtils.LogStep("Brands bar verification completed successfully");
+            return this;
+        }
     }
 }
