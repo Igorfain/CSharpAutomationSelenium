@@ -34,13 +34,18 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
         {
             try
             {
-                var element = _wait.Until(driver => driver.FindElements(_bookStoreHeading).Count > 0);
-                return element;
+                var isBookStoreHeadingPresent = _wait.Until(IsBookStoreHeadingPresent);
+                return isBookStoreHeadingPresent;
             }
-            catch
+            catch (WebDriverTimeoutException)
             {
                 return false;
             }
+        }
+
+        private bool IsBookStoreHeadingPresent(IWebDriver driver)
+        {
+            return driver.FindElements(_bookStoreHeading).Count > 0;
         }
     }
 }

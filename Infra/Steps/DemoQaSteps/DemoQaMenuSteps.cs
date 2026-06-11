@@ -15,8 +15,8 @@ namespace CSharpAutomationSelenium.Steps.DemoQaSteps
             _menuPage = new DemoQaMenuPage(driver, wait);
         }
 
-        [AllureStep("Wait for DemoQa menu to load")]
-        public DemoQaMenuSteps WaitForMenuLoad()
+        [AllureStep("Perform DemoQa menu load")]
+        public DemoQaMenuSteps PerformMenuLoad()
         {
             LoggerUtils.LogStep("Waiting for DemoQa menu items to load");
             _menuPage.WaitForMenuToLoad();
@@ -24,8 +24,8 @@ namespace CSharpAutomationSelenium.Steps.DemoQaSteps
             return this;
         }
 
-        [AllureStep("Click Book Store card")]
-        public DemoQaMenuSteps ClickBookStoreCard()
+        [AllureStep("Perform Book Store card click")]
+        public DemoQaMenuSteps PerformBookStoreCardClick()
         {
             LoggerUtils.LogStep("Clicking on Book Store Application card");
             _menuPage.ClickBookStoreCard();
