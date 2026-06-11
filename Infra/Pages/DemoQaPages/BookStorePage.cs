@@ -4,7 +4,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace CSharpAutomationSelenium.Pages.DemoQaPages
 {
-    public class DemoQaBookStorePage
+    public class BookStorePage
     {
         private readonly ActionBot _bot;
         private readonly IWebDriver _driver;
@@ -13,7 +13,7 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
         private readonly By _loginLink = By.XPath("//a[contains(text(), 'Login')]");
         private readonly By _bookStoreHeading = By.XPath("//h1[contains(text(), 'Book Store')]");
 
-        public DemoQaBookStorePage(IWebDriver driver, WebDriverWait wait)
+        public BookStorePage(IWebDriver driver, WebDriverWait wait)
         {
             _driver = driver;
             _wait = wait;

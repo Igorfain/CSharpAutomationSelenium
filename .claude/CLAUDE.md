@@ -1,3 +1,19 @@
+## ⚠️ CRITICAL - READ BEFORE WRITING ANY CODE ⚠️
+
+BEFORE writing any code you MUST:
+1. Read ALL rules in this file
+2. Check your code against EVERY rule
+3. If you used a lambda → REWRITE it with foreach
+4. If you used LINQ → REWRITE it with foreach
+
+VIOLATIONS ARE NOT ACCEPTABLE.
+Any code that breaks these rules MUST be rewritten immediately.
+⚠️ ALL CONVENTIONS IN THIS FILE ARE MANDATORY AND MUST BE FOLLOWED WITHOUT EXCEPTION.
+IF YOU ARE NOT SURE - RE-READ THE RULES BEFORE WRITING CODE.
+
+
+---
+
 # CLAUDE Instructions
 
 ## Project Guidelines
