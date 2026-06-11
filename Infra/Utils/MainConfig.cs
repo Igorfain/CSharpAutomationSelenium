@@ -6,6 +6,7 @@ namespace Infra.Utils
     public class MainConfig
     {
         public string url { get; set; } = string.Empty;
+        public string demoqaUrl { get; set; } = string.Empty;
         public List<string> chromeArguments { get; set; } = new();
         public DbSettings DbSettings { get; set; } = new();
 
@@ -34,6 +35,13 @@ namespace Infra.Utils
 
             if (string.IsNullOrWhiteSpace(config.DbSettings.ConnectionString))
                 throw new Exception("DB ConnectionString is not set in JSON or ENV");
+
+            var envDemoQaUrl = Environment.GetEnvironmentVariable("DEMOQA_URL");
+            if (!string.IsNullOrWhiteSpace(envDemoQaUrl))
+                config.demoqaUrl = envDemoQaUrl;
+
+            if (string.IsNullOrWhiteSpace(config.demoqaUrl))
+                throw new Exception("demoqaUrl is not set in JSON or ENV (DEMOQA_URL)");
 
             return config;
         }

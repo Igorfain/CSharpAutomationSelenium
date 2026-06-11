@@ -1,7 +1,7 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using automationexerciseTests.Pages;
+using CSharpAutomationSelenium.Pages;
 using DotNetEnv;
 using Infra.Utils;
 using Newtonsoft.Json;
@@ -34,6 +34,8 @@ namespace Infra.Base
         protected string invalidPassword = string.Empty;
 
         protected virtual bool DoDefaultLogin => true;
+
+        protected virtual string StartUrl => baseUrl;
 
         [SetUp]
         public void SetUp()
@@ -68,7 +70,7 @@ namespace Infra.Base
             invalidPassword = Environment.GetEnvironmentVariable("INVALID_PASSWORD") ?? string.Empty;
 
             var loginPage = new LoginPage(driver, wait);
-            loginPage.NavigateToHome(baseUrl);
+            loginPage.NavigateToHome(StartUrl);
             RemoveAds();
 
             if (DoDefaultLogin)

@@ -1,8 +1,8 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using automationexerciseTests.Infra.Utils;
+using CSharpAutomationSelenium.Infra.Utils;
 
-namespace automationexerciseTests.Pages
+namespace CSharpAutomationSelenium.Pages
 {
     public class LandingPage
     {

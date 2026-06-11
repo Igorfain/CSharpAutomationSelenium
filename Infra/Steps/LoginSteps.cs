@@ -1,5 +1,5 @@
 ﻿using Allure.NUnit.Attributes;
-using automationexerciseTests.Pages;
+using CSharpAutomationSelenium.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
