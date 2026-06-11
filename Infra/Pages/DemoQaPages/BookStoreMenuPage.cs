@@ -1,4 +1,4 @@
-﻿using CSharpAutomationSelenium.Infra.Utils;
+using CSharpAutomationSelenium.Infra.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -29,7 +29,7 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
 
         public List<string> GetMenuCardTitles()
         {
-            var menuCardTitleElements = _driver.FindElements(_menuCardTitles);
+            var menuCardTitleElements = _bot.FindElements(_menuCardTitles);
             var menuCardTitles = new List<string>();
 
             foreach (var menuCardTitleElement in menuCardTitleElements)
@@ -44,7 +44,7 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
         {
             _bot.ScrollToElement(_bookStoreApplicationCard);
             _bot.JSClick(_bookStoreApplicationCard);
-            _bot.WaitForUrlContains("books"); 
+            _bot.WaitForUrlContains("books");
         }
 
         public void ClickLoginButton()

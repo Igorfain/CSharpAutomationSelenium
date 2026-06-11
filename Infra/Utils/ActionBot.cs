@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -21,6 +21,15 @@ namespace CSharpAutomationSelenium.Infra.Utils
         public void WaitForPresenceOfAllElements(By locator)
         {
             _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
+        }
+
+        /// <summary>
+        /// Waits for all elements to be present and returns the collection.
+        /// </summary>
+        public IReadOnlyList<IWebElement> FindElements(By locator)
+        {
+            _wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(locator));
+            return _driver.FindElements(locator);
         }
 
         /// <summary>
@@ -112,15 +121,13 @@ namespace CSharpAutomationSelenium.Infra.Utils
             }
         }
 
-            /// <summary>
-            /// Waits until the current URL contains the specified value.
-            /// </summary>
-            /// <param name="urlPart">The expected part of the URL.</param>
-public void WaitForUrlContains(string urlPart)
+        /// <summary>
+        /// Waits until the current URL contains the specified value.
+        /// </summary>
+        /// <param name="urlPart">The expected part of the URL.</param>
+        public void WaitForUrlContains(string urlPart)
         {
             _wait.Until(ExpectedConditions.UrlContains(urlPart));
         }
     }
-    
-
 }

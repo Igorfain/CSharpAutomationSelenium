@@ -52,7 +52,7 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
         public void ClickLoginMenuItem()
         {
             _bot.Click(_loginMenuItem);
-            _wait.Until(_ => _driver.Url.Contains("login"));
+            _bot.WaitForUrlContains("login");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using CSharpAutomationSelenium.Steps.DemoQaSteps;
 using Infra.Base;
 using NUnit.Framework;
@@ -26,6 +26,7 @@ namespace CSharpAutomationSelenium.Tests.DemoQaTests
 
         [Test]
         [AllureTag("Menu is loaded successfully")]
+        [AllureSuite("DemoQaMenuTests")]
         public void VerifyDemoQaMenuLoadsSuccessfullyTest()
         {
             _menuSteps.VerifyMenuIsLoaded();
@@ -33,11 +34,12 @@ namespace CSharpAutomationSelenium.Tests.DemoQaTests
 
         [Test]
         [AllureTag("Login Book Store application")]
+        [AllureSuite("DemoQaMenuTests")]
         public void VerifyDemoQaMenuLoginBookStoreLoadsSuccessfullyTest()
         {
             _menuSteps.VerifyMenuIsLoaded()
             .PerformBookStoreCardClick()
-            .PerformLoginMenuItemClick(); 
+            .PerformLoginMenuItemClick();
             _loginSteps.VerifyLoginPageIsDisplayed();
         }
     }
