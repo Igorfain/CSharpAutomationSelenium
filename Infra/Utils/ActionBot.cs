@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace automationexerciseTests.Infra.Utils
+namespace CSharpAutomationSelenium.Infra.Utils
 {
     public class ActionBot
     {

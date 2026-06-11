@@ -1,5 +1,6 @@
 {
   "url": "https://automationexercise.com/login",
+  "demoqaUrl": "https://demoqa.com",
   "chromeArguments": [
     "--disable-gpu",
     "--no-sandbox",
