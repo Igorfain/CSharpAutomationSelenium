@@ -93,5 +93,34 @@ namespace CSharpAutomationSelenium.Infra.Utils
             var element = _wait.Until(ExpectedConditions.ElementExists(locator));
             ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].click();", element);
         }
+
+        /// <summary>
+        /// Checks if the element is displayed on the page.
+        /// </summary>
+        /// <param name="locator">The locator for the element to check.</param>
+        /// <returns>True if the element is displayed, false otherwise.</returns>
+        public bool IsElementDisplayed(By locator)
+        {
+            try
+            {
+                var element = _driver.FindElement(locator);
+                return element.Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+            /// <summary>
+            /// Waits until the current URL contains the specified value.
+            /// </summary>
+            /// <param name="urlPart">The expected part of the URL.</param>
+public void WaitForUrlContains(string urlPart)
+        {
+            _wait.Until(ExpectedConditions.UrlContains(urlPart));
+        }
     }
+    
+
 }

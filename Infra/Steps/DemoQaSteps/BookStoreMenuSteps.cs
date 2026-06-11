@@ -6,17 +6,17 @@ using OpenQA.Selenium.Support.UI;
 
 namespace CSharpAutomationSelenium.Steps.DemoQaSteps
 {
-    public class DemoQaMenuSteps
+    public class BookStoreMenuSteps
     {
-        private readonly DemoQaMenuPage _menuPage;
+        private readonly BookStoreMenuPage _menuPage;
 
-        public DemoQaMenuSteps(IWebDriver driver, WebDriverWait wait)
+        public BookStoreMenuSteps(IWebDriver driver, WebDriverWait wait)
         {
-            _menuPage = new DemoQaMenuPage(driver, wait);
+            _menuPage = new BookStoreMenuPage(driver, wait);
         }
 
         [AllureStep("Perform DemoQa menu load")]
-        public DemoQaMenuSteps PerformMenuLoad()
+        public BookStoreMenuSteps PerformMenuLoad()
         {
             LoggerUtils.LogStep("Waiting for DemoQa menu items to load");
             _menuPage.WaitForMenuToLoad();
@@ -25,21 +25,31 @@ namespace CSharpAutomationSelenium.Steps.DemoQaSteps
         }
 
         [AllureStep("Perform Book Store card click")]
-        public DemoQaMenuSteps PerformBookStoreCardClick()
+        public BookStoreMenuSteps PerformBookStoreCardClick()
         {
             LoggerUtils.LogStep("Clicking on Book Store Application card");
-            _menuPage.ClickBookStoreCard();
+            _menuPage.ClickBookStoreApplicationButton();
             LoggerUtils.LogStep("Book Store card clicked successfully");
             return this;
         }
 
         [AllureStep("Verify menu is loaded")]
-        public DemoQaMenuSteps VerifyMenuIsLoaded()
+        public BookStoreMenuSteps VerifyMenuIsLoaded()
         {
             LoggerUtils.LogStep("Verifying that DemoQa menu is loaded");
             _menuPage.WaitForMenuToLoad();
             LoggerUtils.LogStep("Menu verification completed successfully");
             return this;
         }
+
+        [AllureStep("Clicking on Login menu item")]
+        public BookStoreMenuSteps PerformLoginMenuItemClick()
+        {
+            LoggerUtils.LogStep("Clicking on Login menu item");
+            _menuPage.ClickLoginButton();
+            LoggerUtils.LogStep("Login menu item clicked successfully");
+            return this;
+        }
+
     }
 }
