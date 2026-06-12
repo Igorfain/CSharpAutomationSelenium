@@ -1,27 +1,27 @@
 using Allure.NUnit.Attributes;
 using CSharpAutomationSelenium.Steps.DemoQaSteps;
 using Infra.Base;
-using NUnit.Framework;
 
 namespace CSharpAutomationSelenium.Tests.DemoQaTests
 {
     [TestFixture]
     [AllureTag("DemoQa")]
     [AllureSuite("DemoQa Menu Tests")]
-    public class DemoQaMenuTests : BaseTest
+    public class DemoQaGeneralTests : BaseTest
     {
-        private BookStoreMenuSteps _menuSteps = null!;
+        private BookStoreSteps _bookStoreSteps = null!;
         private BookStoreLoginSteps _loginSteps = null!;
+        private DemoQaLandingPageSteps _landingPageSteps = null!;
 
         protected override bool DoDefaultLogin => false;
-
         protected override string StartUrl => config.demoqaUrl;
 
         [SetUp]
         public void TestSetup()
         {
-            _menuSteps = new BookStoreMenuSteps(driver, wait);
+            _bookStoreSteps = new BookStoreSteps(driver, wait);
             _loginSteps = new BookStoreLoginSteps(driver, wait);
+            _landingPageSteps = new DemoQaLandingPageSteps(driver, wait);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace CSharpAutomationSelenium.Tests.DemoQaTests
         [AllureSuite("DemoQaMenuTests")]
         public void VerifyDemoQaMenuLoadsSuccessfullyTest()
         {
-            _menuSteps.VerifyMenuIsLoaded();
+            _landingPageSteps.VerifyMenuIsLoaded();
         }
 
         [Test]
@@ -37,10 +37,21 @@ namespace CSharpAutomationSelenium.Tests.DemoQaTests
         [AllureSuite("DemoQaMenuTests")]
         public void VerifyDemoQaMenuLoginBookStoreLoadsSuccessfullyTest()
         {
-            _menuSteps.VerifyMenuIsLoaded()
-            .PerformBookStoreCardClick()
-            .PerformLoginMenuItemClick();
+            _landingPageSteps.VerifyMenuIsLoaded()
+            .PerformBookStoreAppllicationCardClick();
+            _bookStoreSteps.PerformLoginMenuItemClick();
             _loginSteps.VerifyLoginPageIsDisplayed();
         }
+
+        [Test]
+        [AllureTag("Get menu cards titles")]
+        [AllureSuite("DemoQaMenuTests")]
+        public void GetMenuCardsTitlesTest()
+        {
+            _landingPageSteps.VerifyMenuIsLoaded()
+            .GetMenuCardsTitles()
+            .VerifyMenuCardsTitlesAreCorrect();
+        }
+
     }
 }
