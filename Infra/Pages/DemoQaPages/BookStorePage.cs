@@ -7,16 +7,14 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
     public class BookStorePage
     {
         private readonly ActionBot _bot;
-        private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
 
         private readonly By _loginLink = By.XPath("//a[contains(text(), 'Login')]");
         private readonly By _bookStoreHeading = By.XPath("//h1[contains(text(), 'Book Store')]");
+        private readonly By _menuItems = By.CssSelector(".card.mt-4.top-card");
+        private readonly By _loginMenuItem = By.CssSelector("a[href='/login']");
 
         public BookStorePage(IWebDriver driver, WebDriverWait wait)
         {
-            _driver = driver;
-            _wait = wait;
             _bot = new ActionBot(driver, wait);
         }
 
@@ -34,8 +32,8 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
         {
             try
             {
-                var isBookStoreHeadingPresent = _wait.Until(IsBookStoreHeadingPresent);
-                return isBookStoreHeadingPresent;
+                _bot.WaitForPresenceOfAllElements(_bookStoreHeading);
+                return true;
             }
             catch (WebDriverTimeoutException)
             {
@@ -43,9 +41,16 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
             }
         }
 
-        private bool IsBookStoreHeadingPresent(IWebDriver driver)
+        public void WaitForMenuToLoad()
         {
-            return driver.FindElements(_bookStoreHeading).Count > 0;
+            _bot.WaitForPresenceOfAllElements(_menuItems);
+        }
+
+        public void ClickLoginButton()
+        {
+            _bot.ScrollToElement(_loginMenuItem);
+            _bot.JSClick(_loginMenuItem);
+            _bot.WaitForUrlContains("login");
         }
     }
 }

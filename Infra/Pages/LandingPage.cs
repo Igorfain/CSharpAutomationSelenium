@@ -8,7 +8,6 @@ namespace CSharpAutomationSelenium.Pages
     {
         private readonly ActionBot _bot;
         private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
         private readonly By _navigationBarItems = By.CssSelector("ul.nav.navbar-nav li");
         private readonly By _brandsBarItems = By.CssSelector(".brands-name .nav.nav-pills.nav-stacked li");
 
@@ -16,7 +15,6 @@ namespace CSharpAutomationSelenium.Pages
         {
             _bot = new ActionBot(driver, wait);
             _driver = driver;
-            _wait = wait;
         }
 
         public List<string> GetNavigationBarItems()

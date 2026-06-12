@@ -1,24 +1,20 @@
-using CSharpAutomationSelenium.Infra.Utils;
+﻿using CSharpAutomationSelenium.Infra.Utils;
+using Infra.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace CSharpAutomationSelenium.Pages.DemoQaPages
 {
-    public class BookStoreMenuPage
+    public class DemoQaLandingPage
     {
+    
         private readonly ActionBot _bot;
-        private readonly IWebDriver _driver;
-        private readonly WebDriverWait _wait;
-
         private readonly By _menuItems = By.CssSelector(".card.mt-4.top-card");
         private readonly By _menuCardTitles = By.CssSelector(".card.mt-4.top-card h5");
         private readonly By _bookStoreApplicationCard = By.CssSelector("a[href='/books']");
-        private readonly By _loginMenuItem = By.CssSelector("a[href='/login']");
 
-        public BookStoreMenuPage(IWebDriver driver, WebDriverWait wait)
+        public DemoQaLandingPage(IWebDriver driver, WebDriverWait wait)
         {
-            _driver = driver;
-            _wait = wait;
             _bot = new ActionBot(driver, wait);
         }
 
@@ -47,11 +43,10 @@ namespace CSharpAutomationSelenium.Pages.DemoQaPages
             _bot.WaitForUrlContains("books");
         }
 
-        public void ClickLoginButton()
+        public List<string> GetMenuCardTitlesReferenceList()
         {
-            _bot.ScrollToElement(_loginMenuItem);
-            _bot.JSClick(_loginMenuItem);
-            _bot.WaitForUrlContains("login");
+            return demoQaDataLists.MenuCardTitlesReferenceList();
+
         }
     }
 }
