@@ -19,8 +19,8 @@ namespace Infra.Steps
         [AllureStep("Verify logged in user is {0}")]
         public LoginSteps VerifyLoggedInUser(string expectedUsername)
         {
-            LoggerUtils.LogStep($"Verifying logged in user. Expected: '{expectedUsername}', Actual: '{loginPage.GetLoggedInUsername()}'");
             string actualUser = loginPage.GetLoggedInUsername();
+            LoggerUtils.LogStep($"Verifying logged in user. Expected: '{expectedUsername}', Actual: '{actualUser}'");
             Assert.That(actualUser, Is.EqualTo(expectedUsername), "User login mismatch");
             return this;
         }

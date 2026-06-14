@@ -18,7 +18,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 
         [Test]
         [AllureStory("Create Pet")]
-        public async Task CreatePet()
+        public void CreatePet()
         {
             _petStoreApiSteps
                 .PerformCreatePet()
@@ -27,7 +27,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 
         [Test]
         [AllureStory("Get Pet")]
-        public async Task GetPet()
+        public void GetPet()
         {
             _petStoreApiSteps
                 .PerformCreatePet()
@@ -40,7 +40,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 
         [Test]
         [AllureStory("Delete Pet")]
-        public async Task DeletePet()
+        public void DeletePet()
         {
             _petStoreApiSteps
                 .PerformCreatePet()

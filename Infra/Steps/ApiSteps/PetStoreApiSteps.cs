@@ -24,12 +24,12 @@ namespace Infra.Steps.ApiSteps
         [AllureStep("Perform create pet")]
         public PetStoreApiSteps PerformCreatePet()
         {
-            var (request, id, name) = PetFactory.CreatePetRequest();
-            _petId = id;
-            _petName = name;
+            var (petRequest, petId, petName) = PetFactory.CreatePetRequest();
+            _petId = petId;
+            _petName = petName;
 
-            LoggerUtils.LogStep($"Creating pet with ID: {id}, Name: {name}");
-            _lastResponse = _client.Execute(request);
+            LoggerUtils.LogStep($"Creating pet with ID: {petId}, Name: {petName}");
+            _lastResponse = _client.Execute(petRequest);
 
             return this;
         }
@@ -50,12 +50,12 @@ namespace Infra.Steps.ApiSteps
         [AllureStep("Perform delete pet")]
         public PetStoreApiSteps PerformDeletePet()
         {
-            var request = new RestRequest($"pet/{_petId}", Method.Delete);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json");
+            var deletePetRequest = new RestRequest($"pet/{_petId}", Method.Delete);
+            deletePetRequest.AddHeader("Accept", "application/json");
+            deletePetRequest.AddHeader("Content-Type", "application/json");
 
             LoggerUtils.LogStep($"Deleting pet with ID: {_petId}");
-            _lastResponse = _client.Execute(request);
+            _lastResponse = _client.Execute(deletePetRequest);
 
             return this;
         }
@@ -85,12 +85,12 @@ namespace Infra.Steps.ApiSteps
         [AllureStep("Verify pet data matches")]
         public PetStoreApiSteps VerifyPetData()
         {
-            var pet = JsonConvert.DeserializeObject<PetModel>(_lastResponse?.Content);
+            var actualPet = JsonConvert.DeserializeObject<PetModel>(_lastResponse?.Content);
 
-            Assert.That(pet, Is.Not.Null, "Failed to deserialize PetModel");
+            Assert.That(actualPet, Is.Not.Null, "Failed to deserialize PetModel");
 
             LoggerUtils.LogStep($"Validating pet data. ID: {_petId}, Name: {_petName}");
-            PetValidator.ValidateCreatedPet(pet!, _petId, _petName);
+            PetValidator.ValidateCreatedPet(actualPet!, _petId, _petName);
 
             return this;
         }
