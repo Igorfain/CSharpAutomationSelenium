@@ -40,7 +40,6 @@ namespace Infra.Steps
                     $"Navigation bar item containing '{expectedItem}' was not found. Actual navigation bar items: {string.Join(" | ", actualNavigationBarItems)}");
             }
 
-            LoggerUtils.LogStep("Navigation bar verification completed successfully");
             return this;
         }
 
@@ -67,7 +66,6 @@ namespace Infra.Steps
                     $"Brands bar item containing '{expectedItem}' was not found. Actual brands bar items: {string.Join(" | ", actualBrandsBarItems)}");
             }
 
-            LoggerUtils.LogStep("Brands bar verification completed successfully");
             return this;
         }
     }

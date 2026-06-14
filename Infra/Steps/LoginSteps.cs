@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using CSharpAutomationSelenium.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -19,7 +19,7 @@ namespace Infra.Steps
         [AllureStep("Verify logged in user is {0}")]
         public LoginSteps VerifyLoggedInUser(string expectedUsername)
         {
-            LoggerUtils.LogStep($"Verifying if logged in username is: '{expectedUsername}'");
+            LoggerUtils.LogStep($"Verifying logged in user. Expected: '{expectedUsername}', Actual: '{loginPage.GetLoggedInUsername()}'");
             string actualUser = loginPage.GetLoggedInUsername();
             Assert.That(actualUser, Is.EqualTo(expectedUsername), "User login mismatch");
             return this;
@@ -32,8 +32,6 @@ namespace Infra.Steps
             loginPage.Login(email, password);
 
             string errorMessage = loginPage.GetErrorMessage();
-            LoggerUtils.LogStep($"Checking server error message. Actual: '{errorMessage}'");
-
             Assert.That(errorMessage, Is.EqualTo("Your email or password is incorrect!"),
                 "Error message mismatch");
 
@@ -60,7 +58,7 @@ namespace Infra.Steps
         [AllureStep("Perform login action")]
         public LoginSteps ExecuteLogin(string email, string password)
         {
-            LoggerUtils.LogStep($"Executing login action only for Email: '{email}'");
+            LoggerUtils.LogStep($"Executing login with email: '{email}'");
             loginPage.Login(email, password);
             return this;
         }
@@ -69,7 +67,7 @@ namespace Infra.Steps
         public LoginSteps VerifyBrowserEmailValidation(string expectedMessage)
         {
             string actualMessage = loginPage.GetEmailValidationMessage();
-            LoggerUtils.LogStep($"Browser Email Validation - Expected: '{expectedMessage}', Actual: '{actualMessage}'");
+            LoggerUtils.LogStep($"Verifying browser email validation. Expected: '{expectedMessage}', Actual: '{actualMessage}'");
 
             Assert.That(actualMessage, Is.EqualTo(expectedMessage), "Email validation message mismatch");
             return this;
@@ -79,7 +77,7 @@ namespace Infra.Steps
         public LoginSteps VerifyBrowserPasswordValidation(string expectedMessage)
         {
             string actualMessage = loginPage.GetPasswordValidationMessage();
-            LoggerUtils.LogStep($"Browser Password Validation - Expected: '{expectedMessage}', Actual: '{actualMessage}'");
+            LoggerUtils.LogStep($"Verifying browser password validation. Expected: '{expectedMessage}', Actual: '{actualMessage}'");
 
             Assert.That(actualMessage, Is.EqualTo(expectedMessage), "Password validation message mismatch");
             return this;
