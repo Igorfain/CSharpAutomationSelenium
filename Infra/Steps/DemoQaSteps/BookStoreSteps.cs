@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using CSharpAutomationSelenium.Pages.DemoQaPages;
 using Infra.Utils;
 using OpenQA.Selenium;
@@ -22,7 +22,6 @@ namespace CSharpAutomationSelenium.Steps.DemoQaSteps
         {
             LoggerUtils.LogStep("Clicking on Login menu item");
             _bookStorePage.ClickLoginButton();
-            LoggerUtils.LogStep("Login menu item clicked successfully");
             return this;
         }
 

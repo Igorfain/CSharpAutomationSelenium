@@ -1,11 +1,6 @@
-﻿using Allure.NUnit.Attributes;
-using Infra.Api.Factories;
-using Infra.Api.Helpers;
+using Allure.NUnit.Attributes;
 using Infra.Base;
-using Infra.Utils;
-using Newtonsoft.Json;
-using RestSharp;
-using System.Net;
+using Infra.Steps.ApiSteps;
 
 namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 {
@@ -13,54 +8,45 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
     [Parallelizable(ParallelScope.Children)]
     public class PetStoreTestsApi : BaseApiTest
     {
+        private PetStoreApiSteps _petStoreApiSteps = null!;
+
+        [SetUp]
+        public void PetStoreTestSetup()
+        {
+            _petStoreApiSteps = new PetStoreApiSteps(client);
+        }
+
         [Test]
         [AllureStory("Create Pet")]
-        public async Task CreatePet()
+        public void CreatePet()
         {
-            LoggerUtils.LogStep("API-Create Pet");
-
-            var (request, id, name) = PetFactory.CreatePetRequest();
-            var response = await client.ExecuteAsync(request);
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            _petStoreApiSteps
+                .PerformCreatePet()
+                .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK);
         }
 
         [Test]
         [AllureStory("Get Pet")]
-        public async Task GetPet()
+        public void GetPet()
         {
-            LoggerUtils.LogStep("API-GET Pet");
-
-            var (createRequest, id, name) = PetFactory.CreatePetRequest();
-            var createResponse = await client.ExecuteAsync(createRequest);
-            Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Setup: Failed to create pet");
-
-            var request = CreateRequest(Method.Get, $"pet/{id}");
-            var response = await client.ExecuteAsync(request);
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(response.Content, Is.Not.Null.And.Not.Empty, "Response content is empty");
-
-            var pet = JsonConvert.DeserializeObject<PetModel>(response.Content);
-            Assert.That(pet, Is.Not.Null, "Failed to deserialize PetModel");
-
-            PetValidator.ValidateCreatedPet(pet, id, name);
+            _petStoreApiSteps
+                .PerformCreatePet()
+                .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK)
+                .PerformGetPet()
+                .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK)
+                .VerifyResponseContentIsNotEmpty()
+                .VerifyPetData();
         }
 
         [Test]
         [AllureStory("Delete Pet")]
-        public async Task DeletePet()
+        public void DeletePet()
         {
-            LoggerUtils.LogStep("API-Delete Pet");
-
-            var (createRequest, id, name) = PetFactory.CreatePetRequest();
-            var createResponse = await client.ExecuteAsync(createRequest);
-            Assert.That(createResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK), "Setup: Failed to create pet");
-
-            var request = CreateRequest(Method.Delete, $"pet/{id}");
-            var response = await client.ExecuteAsync(request);
-
-            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            _petStoreApiSteps
+                .PerformCreatePet()
+                .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK)
+                .PerformDeletePet()
+                .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK);
         }
     }
 }
