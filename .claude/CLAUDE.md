@@ -57,7 +57,7 @@ STRICT CONVENTIONS (NON-NEGOTIABLE):
    - Private field: private readonly [POMClass] _[pomInstance];
    - Method naming: Verify*, Perform*, Execute* (e.g., VerifyNavigationContainsItems)
    - MUST return 'this' for fluent chaining
-   - REQUIRED: LoggerUtils.LogStep() before and after each action
+   - REQUIRED: Each Step method must contain exactly one LoggerUtils.LogStep() call at the start of the method body
    - REQUIRED: [AllureStep("description")] attribute on all public methods
    - Explicit error messages in assertions with actual vs expected values
 
