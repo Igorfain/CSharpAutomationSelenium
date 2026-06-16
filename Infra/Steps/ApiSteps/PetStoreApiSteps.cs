@@ -124,8 +124,11 @@ namespace Infra.Steps.ApiSteps
                 var statusExists = _inventoryData!.ContainsKey(expectedStatus);
                 var statusCount = statusExists ? _inventoryData[expectedStatus] : 0;
 
+                var sortedStatusKeys = new List<string>(_inventoryData.Keys);
+                sortedStatusKeys.Sort();
+
                 Assert.That(statusExists, Is.True,
-                    $"Expected inventory status '{expectedStatus}' not found in inventory. Available: {string.Join(", ", _inventoryData.Keys.OrderBy(k => k))}");
+                    $"Expected inventory status '{expectedStatus}' not found in inventory. Available: {string.Join(", ", sortedStatusKeys)}");
 
                 LoggerUtils.LogStep($"Status '{expectedStatus}' found with count: {statusCount}");
             }
