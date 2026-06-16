@@ -5,8 +5,7 @@ using Infra.Steps.ApiSteps;
 namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 {
     [AllureFeature("PetStore API")]
-    [Parallelizable(ParallelScope.Children)]
-    public class PetStoreTestsApi : BaseApiTest
+    public class PetStoreApiTest : BaseApiTest
     {
         private PetStoreApiSteps _petStoreApiSteps = null!;
 
@@ -18,7 +17,9 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 
         [Test]
         [AllureStory("Create Pet")]
-        public void CreatePet()
+        [AllureTag("pet-creation")]
+        [AllureSuite("PetStore API")]
+        public void CreatePetTest()
         {
             _petStoreApiSteps
                 .PerformCreatePet()
@@ -27,7 +28,9 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 
         [Test]
         [AllureStory("Get Pet")]
-        public void GetPet()
+        [AllureTag("pet-retrieval")]
+        [AllureSuite("PetStore API")]
+        public void GetPetTest()
         {
             _petStoreApiSteps
                 .PerformCreatePet()
@@ -40,7 +43,9 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
 
         [Test]
         [AllureStory("Delete Pet")]
-        public void DeletePet()
+        [AllureTag("pet-deletion")]
+        [AllureSuite("PetStore API")]
+        public void DeletePetTest()
         {
             _petStoreApiSteps
                 .PerformCreatePet()
@@ -48,5 +53,20 @@ namespace CSharpAutomationSelenium.Tests.Tests.ApiTests
                 .PerformDeletePet()
                 .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK);
         }
+
+        [Test]
+        [AllureStory("Get Store Inventory")]
+        [AllureTag("store-inventory")]
+        [AllureSuite("PetStore API")]
+        public void GetStoreInventoryTest()
+        {
+            _petStoreApiSteps
+                .PerformGetStoreInventory()
+                .VerifyResponseStatusCode(System.Net.HttpStatusCode.OK)
+                .VerifyResponseContentIsNotEmpty()
+                .VerifyInventoryDataIsValid()
+                .VerifyInventoryContainsExpectedStatuses();
+        }
+
     }
 }

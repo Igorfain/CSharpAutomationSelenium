@@ -1,4 +1,4 @@
-﻿namespace Infra.Api
+namespace Infra.Api
 {
     public static class PetStoreEndpoints
     {
@@ -7,5 +7,6 @@
         public const string CREATE_PET = BASE_API + "/pet";
         public const string GET_PET = BASE_API + "/pet/";     // + id
         public const string DELETE_PET = BASE_API + "/pet/";  // + id
+        public const string GET_STORE_INVENTORY = BASE_API + "/store/inventory";
     }
 }
