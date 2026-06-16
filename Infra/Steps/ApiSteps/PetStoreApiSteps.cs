@@ -1,4 +1,5 @@
 using Allure.NUnit.Attributes;
+using Infra.Api;
 using Infra.Api.Factories;
 using Infra.Api.Helpers;
 using Infra.Utils;
@@ -15,6 +16,7 @@ namespace Infra.Steps.ApiSteps
         private RestResponse? _lastResponse;
         private long _petId;
         private string _petName = string.Empty;
+        private Dictionary<string, int>? _inventoryData;
 
         public PetStoreApiSteps(RestClient client)
         {
@@ -60,6 +62,18 @@ namespace Infra.Steps.ApiSteps
             return this;
         }
 
+        [AllureStep("Perform get store inventory")]
+        public PetStoreApiSteps PerformGetStoreInventory()
+        {
+            var inventoryRequest = new RestRequest(PetStoreEndpoints.GET_STORE_INVENTORY, Method.Get);
+            inventoryRequest.AddHeader("Accept", "application/json");
+
+            LoggerUtils.LogStep("Getting store inventory by status");
+            _lastResponse = _client.Execute(inventoryRequest);
+
+            return this;
+        }
+
         [AllureStep("Verify response status code is {expectedStatusCode}")]
         public PetStoreApiSteps VerifyResponseStatusCode(HttpStatusCode expectedStatusCode)
         {
@@ -78,6 +92,43 @@ namespace Infra.Steps.ApiSteps
 
             Assert.That(_lastResponse?.Content, Is.Not.Null.And.Not.Empty,
                 "Response content is empty");
+
+            return this;
+        }
+
+        [AllureStep("Verify inventory data is valid")]
+        public PetStoreApiSteps VerifyInventoryDataIsValid()
+        {
+            _inventoryData = JsonConvert.DeserializeObject<Dictionary<string, int>>(_lastResponse?.Content);
+
+            LoggerUtils.LogStep("Validating inventory data structure and content");
+
+            Assert.That(_inventoryData, Is.Not.Null, "Failed to deserialize inventory data");
+            Assert.That(_inventoryData, Is.Not.Empty, "Inventory data is empty");
+
+            var inventoryStatusCount = _inventoryData!.Count;
+            LoggerUtils.LogStep($"Found {inventoryStatusCount} inventory status entries");
+
+            return this;
+        }
+
+        [AllureStep("Verify inventory contains expected statuses")]
+        public PetStoreApiSteps VerifyInventoryContainsExpectedStatuses()
+        {
+            var expectedStatuses = StoreInventoryData.GetExpectedInventoryStatuses();
+
+            LoggerUtils.LogStep($"Verifying inventory contains expected statuses: {string.Join(", ", expectedStatuses)}");
+
+            foreach (var expectedStatus in expectedStatuses)
+            {
+                var statusExists = _inventoryData!.ContainsKey(expectedStatus);
+                var statusCount = statusExists ? _inventoryData[expectedStatus] : 0;
+
+                Assert.That(statusExists, Is.True,
+                    $"Expected inventory status '{expectedStatus}' not found in inventory. Available: {string.Join(", ", _inventoryData.Keys.OrderBy(k => k))}");
+
+                LoggerUtils.LogStep($"Status '{expectedStatus}' found with count: {statusCount}");
+            }
 
             return this;
         }
