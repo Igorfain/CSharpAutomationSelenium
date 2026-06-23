@@ -1,12 +1,12 @@
 using Allure.NUnit.Attributes;
-using CSharpAutomationSelenium.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using Infra.Utils;
+using Infra.Pages.automationexercisePages;
 
 
-namespace Infra.Steps
+namespace Infra.Steps.automationexerciseSteps
 {
     public class LandingPageSteps
     {

@@ -1,10 +1,10 @@
 ﻿using Allure.NUnit.Attributes;
-using CSharpAutomationSelenium.Pages;
+using Infra.Pages.automationexercisePages;
 using Infra.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace Infra.Steps
+namespace Infra.Steps.automationexerciseSteps
 {
     public class SignUpSteps
     {

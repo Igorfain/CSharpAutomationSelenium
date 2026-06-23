@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Tests\UITests\RegistrationUserTest.cs" />
+    <None Include="Tests\UITests\AutomationexerciseTests\RegistrationUserTest.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,9 @@
 ﻿using Allure.NUnit.Attributes;
 using Infra.Base;
-using Infra.Steps;
+using Infra.Steps.automationexerciseSteps;
 using Infra.Utils;
 
-namespace CSharpAutomationSelenium.Tests.UITests
+namespace CSharpAutomationSelenium.Tests.Tests.UITests.automationexerciseTests
 {
     public class LandingPageNavBarTest : BaseTest
     {

@@ -1,6 +1,7 @@
 ﻿using Allure.NUnit.Attributes;
 using Infra.Base;
 using Infra.Steps;
+using Infra.Steps.automationexerciseSteps;
 using Infra.TestData;
 using Infra.Utils;
 

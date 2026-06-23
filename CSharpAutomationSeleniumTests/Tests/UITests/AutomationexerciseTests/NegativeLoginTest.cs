@@ -1,8 +1,8 @@
-﻿using Infra.Steps;
-using Allure.NUnit.Attributes;
+﻿using Allure.NUnit.Attributes;
 using Infra.Base;
+using Infra.Steps.automationexerciseSteps;
 
-namespace CSharpAutomationSelenium.Tests.UITests
+namespace CSharpAutomationSelenium.Tests.Tests.UITests.automationexerciseTests
 {
     [AllureSuite("Login")]
     public class NegativeLoginTest : BaseTest
