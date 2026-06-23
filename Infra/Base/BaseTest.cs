@@ -1,7 +1,6 @@
-﻿using Allure.Net.Commons;
+using Allure.Net.Commons;
 using Allure.NUnit;
 using Allure.NUnit.Attributes;
-using CSharpAutomationSelenium.Pages;
 using DotNetEnv;
 using Infra.Pages.automationexercisePages;
 using Infra.Utils;
@@ -35,6 +34,9 @@ namespace Infra.Base
         protected string invalidPassword = string.Empty;
 
         protected virtual bool DoDefaultLogin => true;
+
+        // When true: login is performed via HTTP (no browser), session cookies are injected into the driver
+        protected virtual bool DoApiLogin => false;
 
         protected virtual string StartUrl => baseUrl;
 
@@ -74,7 +76,28 @@ namespace Infra.Base
             loginPage.NavigateToHome(StartUrl);
             RemoveAds();
 
-            if (DoDefaultLogin)
+            if (DoApiLogin)
+            {
+                // Get session cookies via HTTP POST (skips browser login UI entirely)
+                var sessionCookies = ApiLoginHelper.GetSessionCookies(baseUrl, username, password);
+
+                // Browser must already be on the domain before cookies can be added (done above via NavigateToHome)
+                foreach (var sessionCookie in sessionCookies)
+                {
+                    driver.Manage().Cookies.AddCookie(new Cookie(
+                        sessionCookie.Name,
+                        sessionCookie.Value,
+                        sessionCookie.Domain,
+                        sessionCookie.Path,
+                        null
+                    ));
+                }
+
+                // Refresh so the browser picks up the injected session and loads the authenticated state
+                driver.Navigate().Refresh();
+                RemoveAds();
+            }
+            else if (DoDefaultLogin)
             {
                 loginPage.Login(username, password);
             }
@@ -107,10 +130,10 @@ namespace Infra.Base
                 IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
                 string script = @"
             const selectors = [
-                'iframe[id^=""aswift""]', 
-                'iframe[name^=""aswift""]', 
-                'ins.adsbygoogle', 
-                '#google_esf', 
+                'iframe[id^=""aswift""]',
+                'iframe[name^=""aswift""]',
+                'ins.adsbygoogle',
+                '#google_esf',
                 '.google-anno-placement',
                 '#ad_iframe',
                 'div[id^=""google_ads""]'

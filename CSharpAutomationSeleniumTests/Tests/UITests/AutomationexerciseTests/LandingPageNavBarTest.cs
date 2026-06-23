@@ -1,4 +1,4 @@
-﻿using Allure.NUnit.Attributes;
+using Allure.NUnit.Attributes;
 using Infra.Base;
 using Infra.Steps.automationexerciseSteps;
 using Infra.Utils;
@@ -7,8 +7,10 @@ namespace CSharpAutomationSelenium.Tests.Tests.UITests.automationexerciseTests
 {
     public class LandingPageNavBarTest : BaseTest
     {
-
         private LandingPageSteps _landingPageSteps = null!;
+
+        protected override bool DoDefaultLogin => false;
+        protected override bool DoApiLogin => true;
 
         [SetUp]
         public void Setup()
@@ -32,7 +34,6 @@ namespace CSharpAutomationSelenium.Tests.Tests.UITests.automationexerciseTests
         {
             var expectedItems = LandingPageItemsListData.BrandsBarItemsReferenceList();
             _landingPageSteps.VerifyBrandsBarContainsItems(expectedItems);
-
         }
     }
 }
