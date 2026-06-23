@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using CSharpAutomationSelenium.Infra.Utils;
 
-namespace CSharpAutomationSelenium.Pages
+namespace Infra.Pages.automationexercisePages
 {
     public class LoginPage
     {

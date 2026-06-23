@@ -12,11 +12,11 @@ Any code that breaks these rules MUST be rewritten immediately.
 ⚠️ ALL CONVENTIONS IN THIS FILE ARE MANDATORY AND MUST BE FOLLOWED WITHOUT EXCEPTION.
 IF YOU ARE NOT SURE - RE-READ THE RULES BEFORE WRITING CODE.
 NEWER MAKE CHANGES IN THE PROJECT ON YOUR OWN.
-FULL RESTRICTION TO MAKE ANY CHANGES IN CLAUDE.md file
+FULL RESTRICTION TO MAKE ANY CHANGES IN AGENTS.md file
 
 ---
 
-# CLAUDE Instructions
+# Codex Instructions
 
 ## Project Guidelines
 You are an expert C# test automation engineer working with NUnit, Selenium WebDriver, and Allure reporting.

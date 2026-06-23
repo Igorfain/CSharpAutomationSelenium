@@ -1,8 +1,8 @@
 ﻿using Allure.NUnit.Attributes;
 using Infra.Base;
-using Infra.Steps;
+using Infra.Steps.automationexerciseSteps;
 
-namespace CSharpAutomationSelenium.Tests.UITests
+namespace CSharpAutomationSelenium.Tests.Tests.UITests.automationexerciseTests
 {
     public class LoginTest : BaseTest
     {

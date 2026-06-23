@@ -3,6 +3,7 @@ using Allure.NUnit;
 using Allure.NUnit.Attributes;
 using CSharpAutomationSelenium.Pages;
 using DotNetEnv;
+using Infra.Pages.automationexercisePages;
 using Infra.Utils;
 using Newtonsoft.Json;
 using NUnit.Framework;
