@@ -39,7 +39,8 @@ namespace Infra.Base
         // When true: login is performed via HTTP (no browser), session cookies are injected into the driver
         protected virtual bool DoApiLogin => false;
 
-        // When true: uses Selenium Grid remote browser instead of local ChromeDriver
+        // When true: uses Selenium Grid remote browser instead of local ChromeDriver.
+        //Make sure it false before pushing to avoid CI/CD issues if Selenium Grid is not available.
         protected virtual bool DoRemoteGrid => false;
 
         protected virtual string StartUrl => baseUrl;
