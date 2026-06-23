@@ -11,5 +11,6 @@
   ],
   "DbSettings": {
     "ConnectionString": ""
-  }
+  },
+  "seleniumGridUrl": "http://10.0.0.15:4444/wd/hub"
 }
