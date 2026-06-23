@@ -9,6 +9,7 @@ namespace Infra.Utils
         public string demoqaUrl { get; set; } = string.Empty;
         public List<string> chromeArguments { get; set; } = new();
         public DbSettings DbSettings { get; set; } = new();
+        public string seleniumGridUrl { get; set; } = string.Empty;
 
         public static MainConfig Load()
         {

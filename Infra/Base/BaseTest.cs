@@ -9,6 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
@@ -38,6 +39,10 @@ namespace Infra.Base
         // When true: login is performed via HTTP (no browser), session cookies are injected into the driver
         protected virtual bool DoApiLogin => false;
 
+        // When true: uses Selenium Grid remote browser instead of local ChromeDriver.
+        //Make sure it false before pushing to avoid CI/CD issues if Selenium Grid is not available.
+        protected virtual bool DoRemoteGrid => false;
+
         protected virtual string StartUrl => baseUrl;
 
         [SetUp]
@@ -59,8 +64,15 @@ namespace Infra.Base
             options.AddExcludedArgument("enable-automation");
             options.AddAdditionalChromeOption("useAutomationExtension", false);
 
-            new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
-            driver = new ChromeDriver(options);
+            if (DoRemoteGrid)
+            {
+                driver = new RemoteWebDriver(new Uri(config.seleniumGridUrl), options.ToCapabilities());
+            }
+            else
+            {
+                new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
+                driver = new ChromeDriver(options);
+            }
 
             driver.Manage().Window.Maximize();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));

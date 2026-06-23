@@ -13,6 +13,7 @@ namespace CSharpAutomationSelenium.Tests.Tests.UITests.automationexerciseTests
         // Skip browser UI login — session cookies are injected via HTTP instead
         protected override bool DoDefaultLogin => false;
         protected override bool DoApiLogin => true;
+        //protected override bool DoRemoteGrid => true;
 
         [SetUp]
         public void Setup()
