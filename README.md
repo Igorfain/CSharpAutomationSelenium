@@ -16,7 +16,7 @@ Modern C# Selenium automation framework with UI + API tests, POM architecture, A
 ---
 
 ## 🚀 Running Tests
-
+## **📌 Important note: Some tests will be failed because .env file is missing on repository (security reasons)
 ### Run all tests
 ```bash
 dotnet test
